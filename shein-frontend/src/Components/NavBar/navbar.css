@@ -1,0 +1,105 @@
+.navbar {
+    background: linear-gradient(to right, #ee4d2d, #ff654f);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar:hover {
+    background: linear-gradient(to right, #ff654f, #ee4d2d);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .navbar-brand {
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-brand:hover {
+    color: #ffd9d5;
+  }
+  
+  .navbar-link {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-right: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-link:hover {
+    color: #ffd9d5;
+    transform: scale(1.1);
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-icon {
+    color: white;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-icon:hover {
+    color: #ffd9d5;
+  }
+  
+  .navbar-username {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-username:hover {
+    color: #ffd9d5;
+    text-decoration: underline;
+  }
+  
+  .navbar-logout {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-logout:hover {
+    color: #ffd9d5;
+    transform: rotate(10deg);
+  }
+  
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    20% {
+      transform: translateX(-5px);
+    }
+    40% {
+      transform: translateX(5px);
+    }
+    60% {
+      transform: translateX(-5px);
+    }
+    80% {
+      transform: translateX(5px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  .navbar-cart {
+    position: relative;
+    animation: shake 1s infinite;
+  }
+  
