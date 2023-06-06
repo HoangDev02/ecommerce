@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../../redux/apiRequest";
+import { loginUser } from "../../redux/API/apiRequest";
 import { useDispatch } from "react-redux";
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';

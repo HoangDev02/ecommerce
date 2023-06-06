@@ -1,29 +1,23 @@
 const jwt = require('jsonwebtoken')
-const MyUtil = require('../../../utils/error')
-const { createError } =   require('../../../utils/error')
 const middleware = {
-
     verifyToken: (req,res,next) => {
-        const token =  req.cookies.access_token;
-        if(!token) {
-            MyUtil.showAlertAndRedirect(res, 'You are not logged in', '/')
-        }
-        jwt.verify(token,process.env.JWT_ACCESS_KEY, (err, user)=> {
-            if(err) {
-                MyUtil.showAlertAndRedirect(res, 'token does not exist', '/')
-
-            }
-
-            req.user = user;
-            next()  
-        }) 
+        const token = req.headers.token;
+        if(token) {
+            jwt.verify(token, process.env.JWT_ACCESS_KEY, (err, user)=> {
+                if(err) {
+                    return  res.status(403).json("Token does exist")
+                }
+                req.user = user;
+                next()  
+            }) 
+        }   
     },
     verifyUser: (req,res,next)=> {
         middleware.verifyToken(req,res, () => {
             if(req.user.id === req.params.id  ||  req.user.isAdmin){
                 next()
             }else {
-              MyUtil.showAlertAndRedirect(res, 'you do not have access', '/')
+                return  res.status(403).json("you do not have access")
             }
         })
     },
@@ -32,7 +26,7 @@ const middleware = {
             if(req.user.isAdmin){
                 next()
             }else {
-                MyUtil.showAlertAndRedirect(res, 'you do not have access', '/')
+                return  res.status(403).json("you do not have access")
             }
         })
     },

@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
-import { getAllProduct } from '../../../redux/API/apiRequestProduct';
+import { getProductHome } from '../../../redux/API/apiRequestProduct';
 import './homeUser.scss';
 
 const HomeUser = () => {
@@ -14,7 +14,7 @@ const HomeUser = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllProduct(dispatch);
+    getProductHome(dispatch);
   }, [dispatch]);
 
   return (
@@ -34,7 +34,7 @@ const HomeUser = () => {
                   <Card>
                     <div className="option_container">
                       <div className="options">
-                        <Link to={`/product/${item._id}`} className="option1">
+                        <Link to={`/product/${item.slug}`} className="option1">
                           Details
                         </Link>
                       </div>

@@ -16,7 +16,7 @@ const UserModel = new mongooes.Schema({
         require:true,
         default: "abc.12345"
     },
-    isadmin: {
+    isAdmin: {
         type:Boolean,
     }
 })

@@ -7,7 +7,7 @@ const productModel = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref:"categoryModel"
         },
-        userID: {
+        userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "user"
         },

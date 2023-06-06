@@ -46,7 +46,7 @@ const userController = {
         return jwt.sign(
             {
                 id: user.id,
-                isAdmin: user.admin
+                isAdmin: user.isAdmin
             },process.env.JWT_ACCESS_KEY, {expiresIn:"365d"}
         );
     },
@@ -94,7 +94,7 @@ const userController = {
                      sameSite: "strict"
                  })
                  const { password, ...others } = user._doc;
-                 res.status(200).json({ ...others, accessToken });
+                 res.status(200).json({ ...others, accessToken,refreshToken});
                 
             }
         }catch(err) {
@@ -127,12 +127,21 @@ const userController = {
         })
     },
      //LOG OUT
-    logOut: async (req, res) => {
-        //Clear cookies when user logs out
-        refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
+     logOut: async (req, res) => {
+        const { token } = req.body;
+        
+        // Check if the token exists in the refreshTokens array
+        const index = refreshTokens.indexOf(token);
+        if (index !== -1) {
+          // Remove the token from the refreshTokens array
+          refreshTokens.splice(index, 1);
+        }
+        
+        // Clear the refreshToken cookie
         res.clearCookie("refreshToken");
+        
         res.status(200).json("Logged out successfully!");
-    },
+      },
 
 
 }

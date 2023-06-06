@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import "./user.css";
-import {deleteUser, getAllUsers} from '../../../redux/apiRequest'
+import {deleteUser, getAllUsers} from '../../../redux/API/apiRequest'
 import {useSelector, useDispatch,} from 'react-redux'
 import {useNavigate } from "react-router-dom";
 import {createAxios} from '../../../redux/createInstance'
@@ -9,7 +9,6 @@ import { loginSuccess } from "../../../redux/authSlice";
 
 
 const User = () => {
-
   const user = useSelector((state)=> state.auth.login?.currentUser);
   const userList = useSelector((state) => state.users.users?.allUser)
   const msg = useSelector((state) => state.users?.msg)
@@ -21,8 +20,6 @@ const User = () => {
   const handleDeleteUser = (id) => {
     deleteUser(user?.accessToken,dispatch,id,axiosJWT)
   }
-
-
     //login 
     useEffect(() => {
       if(!user) {

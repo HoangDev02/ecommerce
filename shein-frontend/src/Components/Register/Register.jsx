@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./register.css";
 import { useDispatch } from "react-redux";
 
-import { registerUser } from "../../redux/apiRequest";
+import { registerUser } from "../../redux/API/apiRequest";
 const Register = () => {
 
     const [email,setEmail] = useState("");

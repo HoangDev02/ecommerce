@@ -24,7 +24,7 @@ const ProductUser = () => {
      // const newProduct = {}\
     // navigate(`/cart/${userId}?quantity=${quantity}&productId=${id}`);
     const newPorduct = {
-      productId: id,
+      productId: productDetail._id,
       name: productDetail.name,
       price: productDetail.price,
       img: productDetail.img,
@@ -35,17 +35,13 @@ const ProductUser = () => {
 
   useEffect(() => {
     getProduct( dispatch, id);
+    // console.log(productDetail._id);
   }, [id]);
 
   return (
     <section className="product_section layout_padding">
       <div className="container cart-product">
         <form onSubmit={handleAddCart}> 
-          <div class="infor-Product">
-            <h2>
-              <span>{productDetail?.description}</span>
-            </h2>
-          </div>
           <div className="card_detail">
             <div className="card_image">
               <img src={productDetail?.img} alt="product image"/>
@@ -53,8 +49,12 @@ const ProductUser = () => {
             <div className="card_content text-center">
               <div className='card_description'>
                 <div className='Card_name'>{productDetail?.name}</div>
-                <div className='card_price'>{productDetail.price}.000</div>
-                <input className='card_quantity' name="quantity" type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
+                <div className='card_id'>SKU: {productDetail?._id}</div>
+                <div className='card_price'>{productDetail?.price}.000 VNĐ</div>
+                <div>
+                  <p className='card_price'>Số lượng: <input className='card_quantity' name="quantity" type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)}/></p>
+                 
+                </div>
               </div>
               <div class="d-grid col-6 mx-auto btn_Buy_now">
                 <button type="submit" class="btn btn-outline-danger btn_Buy_now"  >

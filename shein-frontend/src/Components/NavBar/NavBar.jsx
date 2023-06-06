@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logOut } from "../../redux/apiRequest";
+import { logOut } from "../../redux/API/apiRequest";
 import { logoutSuccess } from "../../redux/authSlice";
 import { createAxios } from "../../redux/createInstance";
 import "./navbar.css";
@@ -22,11 +22,14 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let axiosJWT = createAxios(user,dispatch,logoutSuccess);
-  
+  const [searchVisible, setSearchVisible] = useState(false);
+
   const handleLogout = () =>{
     logOut(dispatch,id,navigate, accessToken, axiosJWT);
   }
-
+const handleSearchClick = () => {
+    setSearchVisible(!searchVisible);
+  };
   return (
     <Navbar expand="lg" variant="light" className="navbar">
       <Container>
@@ -38,7 +41,7 @@ const NavBar = () => {
             className="d-inline-block align-top"
             alt="React Bootstrap logo"
           />
-          Shoppe
+          Shein
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -57,7 +60,18 @@ const NavBar = () => {
             </NavDropdown>
           </Nav>
           <Nav className="navbar-right">
-            <FontAwesomeIcon icon={faSearch} className="navbar-icon" />
+            <FontAwesomeIcon
+              icon={faSearch}
+              className="navbar-icon"
+              onClick={handleSearchClick}
+            />
+            {searchVisible && (
+              <div className="search-box">
+                <input type="text" placeholder="Search" />
+                <button>Search</button>
+              </div>
+            )}
+
             <Link to={`cart/${id}`} className="navbar-icon">
               <FontAwesomeIcon icon={faCartShopping} />
             </Link>

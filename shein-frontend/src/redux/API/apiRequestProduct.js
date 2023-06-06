@@ -4,7 +4,16 @@ import { deleteCartFails } from '../cartSlide';
 
 
 
-export const getAllProduct = async(dispatch) => {
+export const getProductHome = async(dispatch) => {
+    dispatch(getProductsStart());
+    try{
+        const res = await axios.get("/product/home",)
+        dispatch(getProductsSuccess(res.data))
+    }catch(err) {
+        dispatch( getProductsFailed())
+    }
+};
+export const getProductAll = async(dispatch) => {
     dispatch(getProductsStart());
     try{
         const res = await axios.get("/product/",)
@@ -13,11 +22,10 @@ export const getAllProduct = async(dispatch) => {
         dispatch( getProductsFailed())
     }
 };
-
-export const getProduct = async(dispatch, id) => {
+export const getProduct = async(dispatch, slug) => {
     dispatch(getSingleProductStart());
     try{
-        const res = await axios.get(`/product/${id}`)
+        const res = await axios.get(`/product/${slug}`)
         dispatch(getSingleProductSuccess(res.data))
     }catch(err) {
         dispatch(getProductsFailed())

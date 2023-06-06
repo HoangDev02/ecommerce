@@ -9,11 +9,14 @@ const Footer = () => {
                 <div class="col-md-4">
                     <div class="full">
                     <div class="logo_footer">
-                        <a href="#"><img
-                            width="210"
-                            src="http://localhost:3000/images/logo.png"
-                            alt="#"
-                        /></a>
+                    <img
+                        src="https://classic.vn/wp-content/uploads/2022/04/logo-shopee.png"
+                        width="30"
+                        height="30"
+                        className="d-inline-block align-top"
+                        alt="React Bootstrap logo"
+                    />
+                    Shein
                     </div>
                     <div class="information_f">
                         <p><strong>ADDRESS:</strong>

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../app/controller/UserController')
-
+const middlewate = require('../app/middleware/middleware')
 //get
 // router.get('/register', userController.getRegister)
 // router.get('/login', userController.getLogin)
@@ -15,6 +15,6 @@ router.post('/refresh', userController.requestRefreshToken)
 router.post('/logout', userController.logOut)
 
 //delete
-router.delete('/delete/:id', userController.deleteUser)
+router.delete('/delete/:id', middlewate.verifyUser,userController.deleteUser)
 
 module.exports = router

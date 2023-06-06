@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import { useSelector,useDispatch } from 'react-redux';
-import {ShowUpdateProduct, deleteProduct, getAllProduct,updateProduct, getProduct} from '../../../redux/API/apiRequestProduct'
+import {ShowUpdateProduct, deleteProduct, getAllProduct,updateProduct, getProduct, getProductHome} from '../../../redux/API/apiRequestProduct'
 import './product.css'
 import { useNavigate } from 'react-router-dom';
 import {createAxios} from '../../../redux/createInstance'
@@ -22,7 +22,7 @@ export default function Product() {
     }
 
     useEffect(() => {
-        getAllProduct( dispatch) 
+        getProductHome( dispatch) 
     }, []);
   return (
     <div className='Container'>
