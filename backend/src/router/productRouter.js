@@ -11,5 +11,6 @@ router.delete('/delete/:id',middlewate.verifyUser,productController.deleteProduc
 router.get('/edit/:id', productController.editProduct)
 router.get('/home', productController.getProducts)
 router.get('/', productController.getProductsAll)
+router.get('/sort', productController.SortProductAscending)
 router.get('/:slug', productController.getProduct)
 module.exports = router

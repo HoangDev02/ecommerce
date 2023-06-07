@@ -74,6 +74,15 @@ const productController = {
             next(err)
         }
 
+    },
+    SortProductAscending: async(req,res,next) => {
+        try {
+            const ascending = await productModel.aggregate([{$sort: {price: -1}}])
+            res.status(200).json(ascending)
+            // res.json("hello")
+        }catch(err) {
+            next(err)
+        }
     }
 }
 
