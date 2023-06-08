@@ -1,10 +1,11 @@
-const categoryModel = require('../models/categoryModel');
-const categories = require('../models/categoryModel')
 
+const categoryModel = require('../models/categoryModel')
+
+const productModel = require('../models/product.model')
 
 const categoriesController = {
     createCategories: async (req,res,next) => {
-        const newCategory = new categories(req.body);
+        const newCategory = new categoryModel(req.body);
         try {
             const savedCategories = await newCategory.save()
             res.status(200).json(savedCategories)
@@ -14,7 +15,7 @@ const categoriesController = {
     },
     updateCategories: async (req,res,next) => {
         try{
-            const updateCategories = await categories.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true});
+            const updateCategories = await categoryModel.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true});
             res.status(200).json(updateCategories)
         }catch(err) {
             next(err)
@@ -22,7 +23,7 @@ const categoriesController = {
     },
     deleteCategories: async(req,res,next) => {
         try {
-            await categories.findByIdAndDelete(req.params.id);
+            await categoryModel.findByIdAndDelete(req.params.id);
             res.status(200).json("Categories has been delete")
         }catch(err) {
             next(err)
@@ -43,6 +44,25 @@ const categoriesController = {
         }catch(err) {
             next(err)
         }
-    }
+    },
+    //  group 2 data categoryModel + productModel
+     getNewCategories: async(req,res,next) => {
+        try {
+            const category = await categoryModel.aggregate([
+                {
+                    $lookup: {
+                        from: "productmodels",
+                        localField: "_id",
+                        foreignField: "category_product_id",
+                        as: "newCategory"
+                    }
+                }
+            ])
+            res.status(200).json(category)
+        }catch(err) {
+            next(err)
+        }
+    },
+    
 }
 module.exports = categoriesController

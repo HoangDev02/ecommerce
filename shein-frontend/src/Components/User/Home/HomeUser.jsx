@@ -5,16 +5,18 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { getProductHome } from '../../../redux/API/apiRequestProduct';
+import { getCategoryHome } from '../../../redux/API/apiRequestCategory';
 import './homeUser.scss';
 
 const HomeUser = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
-  const productList = useSelector((state) => state.products.products?.allProduct);
+  // const productList = useSelector((state) => state.products.products?.allProduct);
+  const categoriesList = useSelector((state) => state.categories.categories?.allCategory);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    getProductHome(dispatch);
+    getCategoryHome(dispatch);
   }, [dispatch]);
 
   return (
@@ -27,27 +29,36 @@ const HomeUser = () => {
           </h2>
         </div>
         <div className="row">
-          {productList?.map((item) => (
-            <div className="col-sm-6 col-md-4 col-lg-4" key={item._id}>
-              <div className="box">
-                <Col>
-                  <Card>
-                    <div className="option_container">
-                      <div className="options">
-                        <Link to={`/product/${item.slug}`} className="option1">
-                          Details
-                        </Link>
-                      </div>
+          {categoriesList?.map((item) => (
+            <div>
+              <h1>{item.name}</h1>
+              <div  className="row" >
+              {
+                item.newCategory?.map((product) => (
+                  <div className="col-sm-6 col-md-4 col-lg-4" key={product._id}>
+                    <div className="box">
+                      <Col>
+                        <Card>
+                          <div className="option_container">
+                            <div className="options">
+                              <Link to={`/product/${product.slug}`} className="option1">
+                                Details
+                              </Link>
+                            </div>
+                          </div>
+                          <div className="img-box">
+                            <Card.Img variant="top" src={product.img} alt="image" />
+                          </div>
+                          <Card.Body className="detail-box">
+                            <Card.Title>{product.name}</Card.Title>
+                            <Card.Title>${product.price}</Card.Title>
+                          </Card.Body>
+                        </Card>
+                      </Col>
                     </div>
-                    <div className="img-box">
-                      <Card.Img variant="top" src={item.img} alt="image" />
-                    </div>
-                    <Card.Body className="detail-box">
-                      <Card.Title>{item.name}</Card.Title>
-                      <Card.Title>${item.price}</Card.Title>
-                    </Card.Body>
-                  </Card>
-                </Col>
+               </div>
+                ))
+              }
               </div>
             </div>
           ))}

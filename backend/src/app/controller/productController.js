@@ -73,7 +73,6 @@ const productController = {
         }catch(err) {
             next(err)
         }
-
     },
     SortProductAscending: async(req,res,next) => {
         try {
@@ -83,7 +82,8 @@ const productController = {
         }catch(err) {
             next(err)
         }
-    }
+    },
+
 }
 
 module.exports = productController

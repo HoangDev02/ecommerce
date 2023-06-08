@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteCart, getCart, updateCartQuantity } from '../../../redux/API/apiRequestcart';
 import { useParams, useNavigate } from 'react-router-dom';
+import PayButton from './PayButton'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './cartUser.scss';
@@ -87,7 +88,8 @@ const CartUser = () => {
            <span className="cart-total-label">Tổng tiền:</span>
            <span className="cart-total-amount">${calculateSubtotal(carts?.products)}</span>
          </div>
-         <button className="cart-checkout-button">Thanh toán</button>
+         {/* <button className="cart-checkout-button">Thanh toán</button> */}
+           <PayButton cartItems = {carts} />
        </div>
      </div>
       }

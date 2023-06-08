@@ -18,6 +18,7 @@ const userRouter = require('./router/userRouter')
 const categoriesRouter = require('./router/categoriesRouter')
 const porductRouter = require('./router/productRouter')
 const cart = require('./router/cartRouter')
+const stripe = require('./router/script')
 const port = 8080;
 dotenv.config()
 
@@ -55,7 +56,7 @@ app.use('/category', categoriesRouter)
 app.use('/product', porductRouter)
 // app.use('/', homeRouter)
 app.use('/cart', cart)
-
+app.use('/stripe',stripe)
 // app.get('/cookies', (req, res) => {
 //   const cookieId = req.cookies.refreshToken;
 //   const kq =jwt.verify(cookieId, process.env.JWT_ACCESS_KEY)
