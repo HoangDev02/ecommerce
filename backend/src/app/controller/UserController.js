@@ -1,9 +1,9 @@
 const userModel = require('../models/user.model')
-// const refreshTokens = require('../models/refreshTokens')
+const refreshTokens = require('../models/refreshTokens')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-let refreshTokens = []
+// let refreshTokens = []
 const userController = {
 
     // //get register
@@ -87,7 +87,11 @@ const userController = {
                 const payload ={username: user.username,id: user._id, isAdmin: user.isAdmin}
                 const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_KEY, { expiresIn: "20s"})
                 const refreshToken = userController.generateRefreshtoken(user);
-                refreshTokens.push(refreshToken)
+                // refreshToken.push(refreshToken)
+                const newRefreshTokenDB = new  refreshTokens({
+                    token: refreshToken
+                  });
+                  await newRefreshTokenDB.save();
                  res.cookie("refreshToken", refreshToken,{
                      httpOnly: true,
                      secure: false,
@@ -101,45 +105,45 @@ const userController = {
             next(err)
         }
     },
-    requestRefreshToken: async(req,res) => {
+    requestRefreshToken: async(req,res,next) => {
         const refreshToken = req.cookies.refreshToken;
         if(!refreshToken) return res.status(404).json("you're not authenticated")
-        if(!refreshTokens.includes(refreshToken)) {
-            return res.status(403).json("refresh token is not valid")
-        }
-        refreshTokens = refreshTokens.filter((token ) => token !== refreshToken);
-        jwt.verify(refreshToken,process.env.JWT_ACCESS_KEY, (err,user)=> {
-            if(err) {
-                console.log(err)
+        try {
+            const refreshTokenDB = await refreshTokens.findOne({ token: refreshToken });
+            if(!refreshTokenDB) {
+                return res.status(403).json("refresh token is not valid")
             }
-            const newAccessToken = userController.generateRefreshtoken(user);
-            const newRefreshToken =  userController.generateRefreshtoken(user);
-            refreshTokens.push(newRefreshToken)
-            res.cookie("refreshToken", refreshToken,{
-                httpOnly: true,
-                secure: false,
-                sameSite: "strict"
+            jwt.verify(refreshToken,process.env.JWT_ACCESS_KEY, (err,user)=> {
+                if(err) {
+                    console.log(err)
+                }
+                const newAccessToken = userController.generateRefreshtoken(user);
+                const newRefreshToken =  userController.generateRefreshtoken(user);
+                refreshTokenDB.token = newRefreshToken;
+                refreshTokenDB.save();
+                res.cookie("refreshToken", refreshToken,{
+                    httpOnly: true,
+                    secure: false,
+                    sameSite: "strict"
+                })
+                res.status(200).json({
+                    accessToken: newAccessToken,
+                    refreshToken: newRefreshToken,
+                })
             })
-            res.status(200).json({
-                accessToken: newAccessToken,
-                refreshToken: newRefreshToken,
-            })
-        })
+        } catch (error) {
+            next(error)
+        }
     },
      //LOG OUT
      logOut: async (req, res) => {
         const { token } = req.body;
-        
-        // Check if the token exists in the refreshTokens array
-        const index = refreshTokens.indexOf(token);
-        if (index !== -1) {
-          // Remove the token from the refreshTokens array
-          refreshTokens.splice(index, 1);
+        const deletedToken = await refreshTokens.deleteOne({ token });
+        if (!deletedToken) {
+          return res.status(404).json('Token not found');
         }
-        
         // Clear the refreshToken cookie
         res.clearCookie("refreshToken");
-        
         res.status(200).json("Logged out successfully!");
       },
 
