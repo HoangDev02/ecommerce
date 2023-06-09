@@ -7,7 +7,7 @@ import { deleteCartFails } from '../cartSlide';
 export const getProductHome = async(dispatch) => {
     dispatch(getProductsStart());
     try{
-        const res = await axios.get("/product/home",)
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}product/home`,)
         dispatch(getProductsSuccess(res.data))
     }catch(err) {
         dispatch( getProductsFailed())
@@ -16,7 +16,7 @@ export const getProductHome = async(dispatch) => {
 export const getProductAll = async(dispatch) => {
     dispatch(getProductsStart());
     try{
-        const res = await axios.get("/product/",)
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}product/`,)
         dispatch(getProductsSuccess(res.data))
     }catch(err) {
         dispatch( getProductsFailed())
@@ -25,7 +25,7 @@ export const getProductAll = async(dispatch) => {
 export const getProduct = async(dispatch, slug) => {
     dispatch(getSingleProductStart());
     try{
-        const res = await axios.get(`/product/${slug}`)
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}product/${slug}`)
         dispatch(getSingleProductSuccess(res.data))
     }catch(err) {
         dispatch(getProductsFailed())
@@ -34,7 +34,7 @@ export const getProduct = async(dispatch, slug) => {
 export const updateProduct = async(product,dispatch,id,navigate) => {
     dispatch(updateProductStart());
     try {
-        const res = await axios.put(`/product/update/${id}`, product)
+        const res = await axios.put(`${process.env.REACT_APP_BACKEND_URL}product/update/${id}`, product)
         dispatch(updateProductSuccess(res.data))
         navigate('/admin/product')
     } catch (error) {
@@ -44,7 +44,7 @@ export const updateProduct = async(product,dispatch,id,navigate) => {
 export const ShowUpdateProduct = async(dispatch,id,navigate) => {
     dispatch(getSingleProductStart());
     try {
-        const res = await axios.get(`/product/edit/${id}`)
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}product/edit/${id}`)
         dispatch(getSingleProductSuccess(res.data))
         navigate(`/product/edit/${id}`)
     } catch (error) {
@@ -54,7 +54,7 @@ export const ShowUpdateProduct = async(dispatch,id,navigate) => {
 export const deleteProduct = async(accessToken,dispatch,id,axiosJWT) => {
     dispatch(deleteProductStart());
     try {
-        const res = await axiosJWT.delete(`/product/delete/${id}`, {
+        const res = await axiosJWT.delete(`${process.env.REACT_APP_BACKEND_URL}product/delete/${id}`, {
             headers: {token: `${accessToken}`}
         })
         dispatch(deleteProductSuccess(res.data))

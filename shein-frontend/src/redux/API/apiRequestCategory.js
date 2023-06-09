@@ -3,7 +3,7 @@ import {getCategoryFailed,getCategorySuccess,getCategoryStart} from '../category
 export const getCategoryHome = async(dispatch) => {
     dispatch(getCategoryStart());
     try{
-        const res = await axios.get("/category/newcategory",)
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}category/newcategory`,)
         dispatch(getCategorySuccess(res.data))
     }catch(err) {
         dispatch(getCategoryFailed())

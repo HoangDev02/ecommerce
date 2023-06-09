@@ -5,7 +5,7 @@ import {addCartFailed, addCartSuccess, getCartFailed,getCartsStart,getCartsSucce
 export const getCart = async(accessToken, dispatch,userId) => {
    dispatch(getCartsStart());
     try{
-        const res = await axios.get(`/cart/${userId}`, {
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}cart/${userId}`, {
             headers: {token: `${accessToken}`}
         })
         console.log(res);
@@ -18,7 +18,7 @@ export const getCart = async(accessToken, dispatch,userId) => {
 export const getCarts = async(accessToken, dispatch) => {
     dispatch(getCartsStart());
      try{
-         const res = await axios.get(`/cart/`, {
+         const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}cart/`, {
              headers: {token: `${accessToken}`}
          })
          console.log(res);
@@ -51,7 +51,7 @@ export const getCarts = async(accessToken, dispatch) => {
 export const addCart = async(product, dispatch, navigate, userId) => {
     dispatch(addCartStart());
     try {
-        const res = await axios.post(`/cart/${userId}`, product)
+        const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}cart/${userId}`, product)
         dispatch(addCartSuccess(res.data))
         navigate(`/cart/${userId}`)
     }catch(err) {
@@ -61,7 +61,7 @@ export const addCart = async(product, dispatch, navigate, userId) => {
 export const deleteCart = async(product,dispatch,userId) => {
     dispatch(deleteCartStart())
     try {
-        const res = await axios.delete(`/cart/${userId}`,{
+        const res = await axios.delete(`${process.env.REACT_APP_BACKEND_URL}cart/${userId}`,{
             data: {productId: `${product}`}
         })
         dispatch(deleteCartSuccess(res.data))
@@ -72,7 +72,7 @@ export const deleteCart = async(product,dispatch,userId) => {
 export const updateCartQuantity = async (userId, productId, quantity, dispatch) => {
     dispatch(updateCartQuantityStart());
     try {
-      const res = await axios.put(`/cart/${userId}`, { productId, quantity });
+      const res = await axios.put(`${process.env.REACT_APP_BACKEND_URL}cart/${userId}`, { productId, quantity });
       dispatch(updateCartQuantitySuccess(res.data));
     } catch (error) {
       dispatch(updateCartQuantityFailed(error.response.data));
