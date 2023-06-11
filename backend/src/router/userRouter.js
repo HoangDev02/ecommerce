@@ -9,9 +9,9 @@ router.get('/', userController.getUsers)
 router.get('/:id', userController.getUser)
 
 //post
+router.post('/refresh', userController.requestRefreshToken)
 router.post('/register' , userController.isRegister);
 router.post('/login', userController.isLogin)
-router.post('/refresh', userController.requestRefreshToken)
 router.post('/logout', userController.logOut)
 
 //delete
