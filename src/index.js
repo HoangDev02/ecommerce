@@ -22,8 +22,8 @@ const stripe = require('./router/script')
 const port = 8080;
 dotenv.config()
 
-app.use(cors());
 app.use(cookieParser());
+app.use(cors({ credentials: true, origin: true }));
 
 //change text in jason
 app.use(express.json());

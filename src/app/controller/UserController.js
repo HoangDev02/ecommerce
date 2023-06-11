@@ -137,7 +137,7 @@ const userController = {
     },
      //LOG OUT
      logOut: async (req, res) => {
-        const { token } = req.body;
+        const token = req.headers.authorization;
         const deletedToken = await refreshTokens.deleteOne({ token });
         if (!deletedToken) {
           return res.status(404).json('Token not found');
@@ -146,8 +146,6 @@ const userController = {
         res.clearCookie("refreshToken");
         res.status(200).json("Logged out successfully!");
       },
-
-
 }
 module.exports = userController
 
