@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteCart, getCart, updateCartQuantity } from '../../../redux/API/apiRequestcart';
 import { useParams, useNavigate } from 'react-router-dom';
 import PayButton from './PayButton'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './cartUser.scss';
 
 const CartUser = () => {
@@ -21,18 +23,23 @@ const CartUser = () => {
     deleteCart(productId, dispatch, userId)
       .then(() => {
         getCart(accessToken, dispatch, userId);
+        toast.success('Sản phẩm đã được xóa khỏi giỏ hàng', { autoClose: 3000 });
       });
   };
 
   const handleUpdateQuantity = (productId, newQuantity) => {
-    updateCartQuantity(userId, productId, newQuantity, dispatch)
-      .then(() => {
-        getCart(accessToken, dispatch, userId);
-      })
-      .catch((error) => {
-        // Handle the error here, such as displaying an error message
-        console.log(error);
-      });
+    if (newQuantity === 0) {
+      handleDeleteCart(productId); // Xóa sản phẩm nếu quantity xuống 0
+    } else {
+      updateCartQuantity(userId, productId, newQuantity, dispatch)
+        .then(() => {
+          getCart(accessToken, dispatch, userId);
+        })
+        .catch((error) => {
+          // Handle the error here, such as displaying an error message
+          console.log(error);
+        });
+    }
   };
 
   useEffect(() => {
@@ -88,11 +95,11 @@ const CartUser = () => {
            <span className="cart-total-label">Tổng tiền:</span>
            <span className="cart-total-amount">${calculateSubtotal(carts?.products)}</span>
          </div>
-         {/* <button className="cart-checkout-button">Thanh toán</button> */}
            <PayButton cartItems = {carts} />
        </div>
      </div>
       }
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };

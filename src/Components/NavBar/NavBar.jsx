@@ -26,8 +26,9 @@ const NavBar = () => {
 
   const handleLogout = () =>{
     logOut(dispatch,id,navigate, accessToken, axiosJWT);
+    // console.log(user);
   }
-const handleSearchClick = () => {
+  const handleSearchClick = () => {
     setSearchVisible(!searchVisible);
   };
   return (
