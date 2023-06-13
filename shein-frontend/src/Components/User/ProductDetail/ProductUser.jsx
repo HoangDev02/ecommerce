@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllProduct, getProduct } from '../../../redux/API/apiRequestProduct';
+import { getProduct } from '../../../redux/API/apiRequestProduct';
 import { addCart } from '../../../redux/API/apiRequestcart';
-
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import './productUser.scss';
+import './productUser.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import ImageZoom from 'react-image-zoom';
 
 const ProductUser = () => {
   const { id } = useParams();
@@ -16,6 +18,7 @@ const ProductUser = () => {
   const [quantity, setQuantity] = useState(1);
   const userId = user?._id;
   const navigate = useNavigate();
+
   const handleAddCart = (e) => {
     e.preventDefault();
     if (!user) {
@@ -27,7 +30,7 @@ const ProductUser = () => {
       name: productDetail.name,
       price: productDetail.price,
       img: productDetail.img,
-      quantity
+      quantity,
     };
     addCart(newProduct, dispatch, navigate, userId);
     // Show toast notification
@@ -36,40 +39,57 @@ const ProductUser = () => {
 
   useEffect(() => {
     getProduct(dispatch, id);
-  }, [id]);
+  }, [dispatch, id]);
+
+  const options = {
+    width: 400,
+    zoomWidth: 500,
+    scale: 1.5,
+    offset: { vertical: 0, horizontal: 10 },
+  };
 
   return (
-    <section className="product_section layout_padding">
-      <div className="container cart-product">
-        <form onSubmit={handleAddCart}> 
-          <div className="card_detail">
-            <div className="card_image">
-              <img src={productDetail?.img} alt="product image"/>
-            </div>
-            <div className="card_content text-center">
-              <div className='card_description'>
-                <div className='Card_name'>{productDetail?.name}</div>
-                <div className='card_id'>SKU: {productDetail?._id}</div>
-                <div className='card_price'>{productDetail?.price}.000 VNĐ</div>
-                <div>
-                <p className='card_price'>Số lượng: <input className='card_quantity' name="quantity" type="number" value={quantity} onChange={(e) => {
-                    if (e.target.value >= 1) {
-                      setQuantity(e.target.value);
-                    }
-                  }} /></p>
-                </div>
-              </div>
-              <div className="d-grid col-6 mx-auto btn_Buy_now">
-                <button type="submit" className="btn btn-outline-danger btn_Buy_now">
+    <Container className="product_section layout_padding">
+      <Row>
+        <Col md={6}>
+          <ImageZoom
+            {...options}
+            img={productDetail?.img}
+            zoomImg={productDetail?.img}
+            alt="Product Image"
+          />
+        </Col>
+        <Col md={6}>
+          <div className="card_content">
+            <div className="card_description">
+              <h3 className="Card_name">{productDetail?.name}</h3>
+              <p className="card_id">SKU: {productDetail?._id}</p>
+              <p className="card_price">{productDetail?.price}.000 VNĐ</p>
+              <p className="card_description">{productDetail?.description}</p>
+              <Form onSubmit={handleAddCart}>
+                <Form.Group controlId="quantity">
+                  <Form.Label>Số lượng:</Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="quantity"
+                    value={quantity}
+                    onChange={(e) => {
+                      if (e.target.value >= 1) {
+                        setQuantity(e.target.value);
+                      }
+                    }}
+                  />
+                </Form.Group>
+                <Button type="submit" variant="outline-danger">
                   Buy Now
-                </button>
-              </div>
+                </Button>
+              </Form>
             </div>
           </div>
-        </form>
-      </div>
+        </Col>
+      </Row>
       <ToastContainer position="top-right" autoClose={3000} />
-    </section>
+    </Container>
   );
 };
 

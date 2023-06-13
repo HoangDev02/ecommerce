@@ -9,7 +9,7 @@ const Carousels = () => {
         <Carousel.Item className="banner">
           <img
             className="d-block w-100"
-            src="https://milano.exdomain.net/image/cache/catalog/slider/a4-1900x774.jpg"
+            src="https://cf.shopee.vn/file/vn-50009109-3e11c4ce1cc390460572c2f9c5fd4e85_xxhdpi"
             alt="First slide"
           />
           <Carousel.Caption>
@@ -20,7 +20,7 @@ const Carousels = () => {
         <Carousel.Item className="banner">
           <img
             className="d-block w-100"
-            src="https://intphcm.com/data/upload/banner-thoi-trang-nam.jpg"
+            src="https://cf.shopee.vn/file/vn-50009109-071cfccf555036809c5e4aa62b6b95e7_xxhdpi"
             alt="Second slide"
           />
           <Carousel.Caption>
@@ -31,7 +31,7 @@ const Carousels = () => {
         <Carousel.Item className="banner">
           <img
             className="d-block w-100"
-            src="https://tmluxury.vn/wp-content/uploads/ao-so-mi-nam-dep-tm-luxury.jpg"
+            src="https://cf.shopee.vn/file/vn-50009109-6d01717d37418935f8338b4138b5dea3_xxhdpi"
             alt="Third slide"
           />
           <Carousel.Caption>

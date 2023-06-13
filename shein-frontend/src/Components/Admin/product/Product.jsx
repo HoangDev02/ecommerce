@@ -13,14 +13,12 @@ export default function Product() {
     const navigate = useNavigate()
     const msg = useSelector((state) => state.products?.msg)
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
-
     const handleUpdate = (id) => {
         ShowUpdateProduct(dispatch,id,navigate)
     }
-    const handleDelete = (id) => {
+    const handleDelete = (id) => {  
         deleteProduct(user?.accessToken,dispatch,id,axiosJWT)
     }
-
     useEffect(() => {
         getProductHome( dispatch) 
     }, []);

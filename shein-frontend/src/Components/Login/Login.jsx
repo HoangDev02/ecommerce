@@ -43,11 +43,11 @@ const Login = () => {
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formUsername">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="text" placeholder="Enter your username" onChange={(e) => setUserName(e.target.value)} />
+          <Form.Control type="text" placeholder="Enter your username" onChange={(e) => setUserName(e.target.value)} className="form-control-login" />
         </Form.Group>
         <Form.Group controlId="formPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} />
+          <Form.Control type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}  className="form-control-login"/>
         </Form.Group>
         <button className="login-button" type="submit">Continue</button>
       </Form>
