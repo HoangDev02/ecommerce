@@ -32,20 +32,16 @@ const cartController = {
       if (!cart) {
         return res.status(404).json({ message: 'Cart not found' });
       }
-  
       const product = cart.products.find((p) => p.productId.toString() === productId);
-  
       if (!product) {
         return res.status(404).json({ message: 'Product not found in cart' });
       }
-  
       // Update the quantity
       product.quantity = quantity < 0 ? 0 : quantity;
       product.total = product.price * product.quantity;
   
       // Recalculate the subtotal
       cart.subtotal = cart.products.reduce((acc, item) => acc + item.total, 0);
-  
       await cart.save();
   
       return res.status(200).json(cart);
