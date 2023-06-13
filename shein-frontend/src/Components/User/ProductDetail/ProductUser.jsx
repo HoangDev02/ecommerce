@@ -2,40 +2,40 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllProduct, getProduct } from '../../../redux/API/apiRequestProduct';
 import { addCart } from '../../../redux/API/apiRequestcart';
-import { Row, CardGroup, Col, Card, Button } from 'react-bootstrap';
-import { Link, useParams,useNavigate  } from 'react-router-dom';
+
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import './productUser.scss';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductUser = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.login?.currentUser);
   const productDetail = useSelector((state) => state.products.detailProduct?.product);
-  // const { loading, error, product } = productDetail;
   const [quantity, setQuantity] = useState(1);
   const userId = user?._id;
   const navigate = useNavigate();
-
-
-
   const handleAddCart = (e) => {
     e.preventDefault();
-    //  addCart(user?.accessToken, dispatch, userId,id,quantity,);
-     // const newProduct = {}\
-    // navigate(`/cart/${userId}?quantity=${quantity}&productId=${id}`);
-    const newPorduct = {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    const newProduct = {
       productId: productDetail._id,
       name: productDetail.name,
       price: productDetail.price,
       img: productDetail.img,
       quantity
-    }
-    addCart(newPorduct,dispatch,navigate,userId)
+    };
+    addCart(newProduct, dispatch, navigate, userId);
+    // Show toast notification
+    toast.success('Sản phẩm đã được thêm vào giỏ hàng', { autoClose: 3000 });
   };
 
   useEffect(() => {
-    getProduct( dispatch, id);
-    // console.log(productDetail._id);
+    getProduct(dispatch, id);
   }, [id]);
 
   return (
@@ -52,12 +52,15 @@ const ProductUser = () => {
                 <div className='card_id'>SKU: {productDetail?._id}</div>
                 <div className='card_price'>{productDetail?.price}.000 VNĐ</div>
                 <div>
-                  <p className='card_price'>Số lượng: <input className='card_quantity' name="quantity" type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)}/></p>
-                 
+                <p className='card_price'>Số lượng: <input className='card_quantity' name="quantity" type="number" value={quantity} onChange={(e) => {
+                    if (e.target.value >= 1) {
+                      setQuantity(e.target.value);
+                    }
+                  }} /></p>
                 </div>
               </div>
-              <div class="d-grid col-6 mx-auto btn_Buy_now">
-                <button type="submit" class="btn btn-outline-danger btn_Buy_now"  >
+              <div className="d-grid col-6 mx-auto btn_Buy_now">
+                <button type="submit" className="btn btn-outline-danger btn_Buy_now">
                   Buy Now
                 </button>
               </div>
@@ -65,6 +68,7 @@ const ProductUser = () => {
           </div>
         </form>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </section>
   );
 };

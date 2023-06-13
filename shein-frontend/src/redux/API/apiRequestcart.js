@@ -53,7 +53,7 @@ export const addCart = async(product, dispatch, navigate, userId) => {
     try {
         const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}cart/${userId}`, product)
         dispatch(addCartSuccess(res.data))
-        navigate(`/cart/${userId}`)
+        // navigate(`/cart/${userId}`)
     }catch(err) {
         dispatch(addCartFailed(err))
     }

@@ -42,6 +42,7 @@ export const getAllUsers = async(accessToken, dispatch, axiosJWT) => {
         dispatch( getUsersFailed())
     }
 };
+
 export const deleteUser = async(accessToken,dispatch,id,axiosJWT) => {
     dispatch(deleteUsersStart());
     try {
