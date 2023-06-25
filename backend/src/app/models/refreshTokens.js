@@ -5,11 +5,17 @@ const refreshTokens = mongooes.Schema(
         // refreshToken:{
         //     type:String
         // }
-        token: {
+        accessToken: {
             type: String,
             required: true,
-            unique: true
-          }
+          },
+        refreshToken: {
+            type: String,
+            required: true,
+        },
+          token: {
+            type: String,
+        }, 
     }
 )
 module.exports = mongooes.model("refreshTokens", refreshTokens)

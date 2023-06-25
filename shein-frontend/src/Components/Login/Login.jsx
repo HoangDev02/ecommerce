@@ -27,7 +27,6 @@ const Login = () => {
       dispatch(loginSuccess(res.data));
     } catch (err) {
       setError("Wrong username or password"); // Đặt thông báo lỗi
-      dispatch(loginFailed());
     }
   }
 

@@ -66,7 +66,7 @@ const Footer = () => {
                         </div>
                         <div class="form_sub">
                             <form>
-                            <fieldset>
+                                <fieldset>
                                 <div class="field">
                                 <input
                                     type="email"
@@ -75,7 +75,7 @@ const Footer = () => {
                                 />
                                 <input type="submit" value="Subscribe" />
                                 </div>
-                            </fieldset>
+                                </fieldset>
                             </form>
                         </div>
                         </div>

@@ -8,9 +8,11 @@ import Footer from "./Components/Footer/Footer";
 import Home from "./pages/user/home/Home";
 import ProductUser from './Components/User/ProductDetail/ProductUser'
 import CartUser from './Components/User/Cart/CartUser'
+import CategoryUser from './Components/User/category/Category'
 import User from "./Components/Admin/user/User";
 import FilterableProductTable from "./Components/User/FilterableProductTable/FilterableProductTable"
 import Success from "./Components/User/Cart/Success";
+import Search from "./Components/User/search/Search";
 //admin
 import HomeAdmin from "./Components/Admin/Home/Home" 
 import Product from "./Components/Admin/product/Product";
@@ -34,6 +36,8 @@ function App() {
         <Route path="/product/:id" element= {<ProductUser/>}></Route>
         <Route path="/product" element={<FilterableProductTable/>}></Route>
         <Route path="/cart/:userId?" element= {<CartUser/>}></Route>
+        <Route path="/category/:slug" element= {<CategoryUser/>}></Route>
+        <Route path="/search?" element= {<Search/>}></Route>
         {/* Compoment */}
         <Route path="/login" element={ <Login />} />
         <Route path="/register" element={<Register />} />

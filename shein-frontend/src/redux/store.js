@@ -4,6 +4,7 @@ import userSlide from './userSlide'
 import productSlide from './productSlide';
 import cartSlide from './cartSlide'
 import categorySlice from './categorySlice';
+import searchSlice from './searchSlice';
 import {
     persistStore,
     persistReducer,
@@ -20,9 +21,7 @@ const persistConfig = {
     version: 1,
     storage,
   };
-
-
-const rootReducer = combineReducers({ auth: authReducer, users: userSlide, products: productSlide, carts: cartSlide, categories: categorySlice});
+const rootReducer = combineReducers({ auth: authReducer, users: userSlide, products: productSlide, carts: cartSlide, categories: categorySlice, searchs: searchSlice});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({

@@ -53,7 +53,6 @@ const CartUser = () => {
       getCart(accessToken, dispatch, userId);
     }
   }, [userId]);
-
   const calculateSubtotal = (products) => {
     let subtotal = 0;
     if (products) {
@@ -63,42 +62,44 @@ const CartUser = () => {
     }
     return subtotal;
   };
-
   return (
     <div>
-      {
-       <div className="cart-wrapper">
-       <div className="cart-container">
-         <h2 className="cart-title">Giỏ hàng</h2>
-         <div className="cart-product-list">
-           {carts?.products && carts.products.map((product) => (
-             <div className="cart-product" key={product.productId}>
-               <div className="cart-product-image">
-                 <img src={product.img} alt={product.name} />
-               </div>
-               <div className="cart-product-details">
-                 <h3 className="cart-product-name">{product.name}</h3>
-                 <div className="cart-product-quantity">
-                   <button onClick={() => handleUpdateQuantity(product.productId, product.quantity - 1)}>-</button>
-                   <span>{product.quantity}</span>
-                   <button onClick={() => handleUpdateQuantity(product.productId, product.quantity + 1)}>+</button>
-                 </div>
-                 <div className="cart-product-price">${product.price}</div>
-                 <button className="cart-product-delete" onClick={() => handleDeleteCart(product.productId)}>
-                   Xóa
-                 </button>
-               </div>
-             </div>
-           ))}
-         </div>
-         <div className="cart-total">
-           <span className="cart-total-label">Tổng tiền:</span>
-           <span className="cart-total-amount">${calculateSubtotal(carts?.products)}</span>
-         </div>
-           <PayButton cartItems = {carts} />
-       </div>
-     </div>
-      }
+      {carts?.products.length > 0 ? (
+        <div className="cart-wrapper">
+          <div className="cart-container">
+            <h2 className="cart-title">Giỏ hàng</h2>
+            <div className="cart-product-list">
+              {carts.products.map((product) => (
+                <div className="cart-product" key={product.productId}>
+                  <div className="cart-product-image">
+                    <img src={product.img} alt={product.name} />
+                  </div>
+                  <div className="cart-product-details">
+                    <h3 className="cart-product-name">{product.name}</h3>
+                    <div className="cart-product-quantity">
+                      <button onClick={() => handleUpdateQuantity(product.productId, product.quantity - 1)}>-</button>
+                      <span>{product.quantity}</span>
+                      <button onClick={() => handleUpdateQuantity(product.productId, product.quantity + 1)}>+</button>
+                    </div>
+                    <div className="cart-product-price">${product.price}</div>
+                    <button className="cart-product-delete" onClick={() => handleDeleteCart(product.productId)}>
+                      Xóa
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="cart-total">
+              <span className="cart-total-label">Tổng tiền:</span>
+              <span className="cart-total-amount">${calculateSubtotal(carts.products)}</span>
+            </div>
+            <PayButton cartItems={carts} />
+            <ToastContainer />
+          </div>
+        </div>
+      ) : (
+        <div className="empty-cart-message">Không có sản phẩm nào trong giỏ hàng</div>
+      )}
       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );

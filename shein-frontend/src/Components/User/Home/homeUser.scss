@@ -2,15 +2,23 @@ $primary-color: #f7444e;
 $text-color: #1f1f1f;
 $transition-duration: 0.3s;
 
+a {
+  text-decoration: none;
+}
+.card-home{
+  --bs-card-border-width: none !important;
+}
+.category-name {
+  color: black;
+}
 .product_section {
   .heading_container {
     margin-bottom: 20px;
   }
-
   .box {
     position: relative;
     margin-top: 25px;
-    padding: 15px;
+    padding: 20px;
     transition: all $transition-duration;
     overflow: hidden;
 
@@ -21,7 +29,7 @@ $transition-duration: 0.3s;
 
       img {
         max-width: 100%;
-        max-height: 250px;
+        max-height: 100%;
         transition: all $transition-duration;
         object-fit: cover;
       }
@@ -121,4 +129,10 @@ $transition-duration: 0.3s;
       }
     }
   }
+}
+.card-category {
+  --bs-card-border-width: none !important
+}
+.card-group-category {
+  margin-left: 110px;
 }

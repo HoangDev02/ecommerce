@@ -8,9 +8,11 @@ router.put('/update/:id',productController.updateProduct)
 router.delete('/delete/:id',middlewate.verifyUser,productController.deleteProduct)
 
 //get product
+router.get('/search', productController.searchProduct)
 router.get('/edit/:id', productController.editProduct)
 router.get('/home', productController.getProducts)
 router.get('/', productController.getProductsAll)
 router.get('/sort', productController.SortProductAscending)
+router.get('/:slug', productController.getProduct)
 router.get('/:slug', productController.getProduct)
 module.exports = router
