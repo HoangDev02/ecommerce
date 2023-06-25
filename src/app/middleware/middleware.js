@@ -3,6 +3,7 @@ const middleware = {
     verifyToken: (req,res,next) => {
         const token = req.headers.token;
         if(token) {
+            console.log(token);
             jwt.verify(token, process.env.JWT_ACCESS_KEY, (err, user)=> {
                 if(err) {
                     return  res.status(403).json("Token does exist")
@@ -10,7 +11,9 @@ const middleware = {
                 req.user = user;
                 next()  
             }) 
-        }   
+        }else {
+            res.status(401).json("You're not authenticated");
+        }
     },
     verifyUser: (req,res,next)=> {
         middleware.verifyToken(req,res, () => {

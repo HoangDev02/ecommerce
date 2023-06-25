@@ -1,15 +1,23 @@
+// orderModel.js
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-  products: [{
-    name: String,
-    quantity: Number,
-    price: Number
-  }],
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  products: [
+    {
+      name: { type: String, required: true },
+      quantity: { type: Number, required: true },
+      price: { type: Number, required: true },
+    },
+  ],
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 const Order = mongoose.model('Order', orderSchema);

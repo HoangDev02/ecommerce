@@ -5,7 +5,7 @@ const middlewate = require('../app/middleware/middleware')
 //get
 // router.get('/register', userController.getRegister)
 // router.get('/login', userController.getLogin)
-router.get('/', userController.getUsers)
+router.get('/', middlewate.verifyToken,userController.getUsers)
 router.get('/:id', userController.getUser)
 
 //post

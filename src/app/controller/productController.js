@@ -83,7 +83,17 @@ const productController = {
             next(err)
         }
     },
-
+    searchProduct: async (req, res, next) => {
+        const searchQuery = req.query.search; // Get the value from the 'q' query parameter
+        try {
+          const products = await productModel.find({
+            $text: { $search: searchQuery } // Use $text and $search to perform search based on the 'name' field
+          });
+          res.status(200).json(products);
+        } catch (err) {
+          next(err);
+        }
+      }
 }
 
 module.exports = productController

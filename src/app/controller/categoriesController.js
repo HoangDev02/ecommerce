@@ -52,17 +52,52 @@ const categoriesController = {
                 {
                     $lookup: {
                         from: "productmodels",
-                        localField: "_id",
-                        foreignField: "category_product_id",
+                        let: { categoryId: "$_id" },
+                        pipeline: [
+                          {
+                            $match: {
+                              $expr: {
+                                $eq: ["$category_product_id", "$$categoryId"]
+                              }
+                            }
+                          },
+                          {
+                            $limit: 3 // Số lượng product giới hạn ở đây
+                          }
+                        ],
                         as: "newCategory"
-                    }
-                }
+                      }
+                },
             ])
             res.status(200).json(category)
         }catch(err) {
             next(err)
         }
     },
+    //find category in slug
+    getFindNewCategories: async(req,res) => {
+        try {
+            const category = await categoryModel.aggregate([
+                {
+                    $match : {
+                        slug: req.params.slug
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "productmodels",
+                        localField: "_id",
+                        foreignField: "category_product_id",
+                        as: "category"
+                    }
+                }  
+            ])
+            // console.log(category);
+            res.status(200).json(category)
+        }catch(err) {
+            console.log(err);
+        }
+    }
     
 }
 module.exports = categoriesController
