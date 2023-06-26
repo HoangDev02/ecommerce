@@ -1,5 +1,6 @@
 
 const productModel = require('../models/product.model')
+const categoryModel = require('../models/categoryModel')
 
 const productController = {
     createProduct: async(req,res,next) => {
@@ -83,15 +84,43 @@ const productController = {
             next(err)
         }
     },
-    searchProduct: async (req, res, next) => {
-        const searchQuery = req.query.search; // Get the value from the 'q' query parameter
+    getSuggestNewCategories: async (req, res) => {
         try {
-          const products = await productModel.find({
-            $text: { $search: searchQuery } // Use $text and $search to perform search based on the 'name' field
-          });
-          res.status(200).json(products);
+          const categoryId = req.body._id;
+          const category = await categoryModel.aggregate([
+            // {
+            //   $match: {
+            //     id: categoryId
+            //   }
+            // },
+            {
+              $lookup: {
+                from: "productmodels",
+                let: { categoryId: "$_id" },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: {
+                        $ne: ["$category_product_id", "$$categoryId"]
+                      }
+                    }
+                  },
+                  {
+                    $sample: {
+                      size: 3 // Số lượng sản phẩm gợi ý giới hạn ở đây
+                    }
+                  },
+                ],
+                as: "suggestedProducts"
+              }
+            },
+            {
+                $limit: 1 // Giới hạn số lượng danh mục chỉ lấy ra 1
+            }
+          ]);
+          res.status(200).json(category);
         } catch (err) {
-          next(err);
+          console.log(err);
         }
       }
 }

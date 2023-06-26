@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProduct } from '../../../redux/API/apiRequestProduct';
 import { addCart } from '../../../redux/API/apiRequestcart';
+import { getSuggestCategory } from '../../../redux/API/apiRequestCategory';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import './productUser.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import ImageZoom from 'react-image-zoom';
 
 const ProductUser = () => {
@@ -15,6 +16,7 @@ const ProductUser = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.login?.currentUser);
   const productDetail = useSelector((state) => state.products.detailProduct?.product);
+  const categoriesList = useSelector((state) => state.categories.suggestCategory?.suggest);
   const [quantity, setQuantity] = useState(1);
   const userId = user?._id;
   const navigate = useNavigate();
@@ -39,6 +41,7 @@ const ProductUser = () => {
 
   useEffect(() => {
     getProduct(dispatch, id);
+    getSuggestCategory(dispatch)
   }, [dispatch, id]);
 
   const options = {
@@ -89,6 +92,37 @@ const ProductUser = () => {
         </Col>
       </Row>
       <ToastContainer position="top-right" autoClose={3000} />
+      <h1 className='pt-5'>Các sản phẩm gợi ý</h1>
+      {categoriesList?.map((item) => (
+              <div  className="row" >
+              {
+                item.suggestedProducts?.map((product) => (
+                  <div className="col-sm-6 col-md-4 col-lg-4" key={product._id}>
+                    <div className="box">
+                      <Col>
+                        <Card>
+                          <div className="option_container">
+                            <div className="options">
+                              <Link to={`/product/${product.slug}`} className="option1">
+                                Details
+                              </Link>
+                            </div>
+                          </div>
+                          <div className="img-box">
+                            <Card.Img variant="top" src={product.img} alt="image" />
+                          </div>
+                          <Card.Body className="detail-box">
+                            <Card.Title>{product.name}</Card.Title>
+                            <Card.Title>${product.price}</Card.Title>
+                          </Card.Body>
+                        </Card>
+                      </Col>
+                    </div>
+               </div>
+                ))
+              }
+              </div>
+          ))}
     </Container>
   );
 };

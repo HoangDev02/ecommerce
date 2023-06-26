@@ -8,7 +8,7 @@ router.put('/update/:id',productController.updateProduct)
 router.delete('/delete/:id',middlewate.verifyUser,productController.deleteProduct)
 
 //get product
-router.get('/search', productController.searchProduct)
+router.get('/suggest', productController.getSuggestNewCategories)
 router.get('/edit/:id', productController.editProduct)
 router.get('/home', productController.getProducts)
 router.get('/', productController.getProductsAll)

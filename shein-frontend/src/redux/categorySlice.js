@@ -14,6 +14,11 @@ const categorySlide = createSlice(
                 isFetching: false,
                 error: false
             },
+            suggestCategory: {
+                suggest: null,
+                isFetching: false,
+                error: false
+            },
             msg: ""
         },
         reducers: {
@@ -39,6 +44,18 @@ const categorySlide = createSlice(
                 state.detailCategory.isFetching = false;
                 state.detailCategory.error = true;
             },
+            //suggest
+            getSuggestCategoryStart: (state) => {
+                state.suggestCategory.isFetching = true;
+            },
+            getSuggestCategorySuccess: (state, action) => {
+                state.suggestCategory.isFetching = false;
+                state.suggestCategory.suggest = action.payload
+            },
+            getSuggestCategoryFailed: (state) => {
+                state.suggestCategory.isFetching = false;
+                state.suggestCategory.error = true;
+            },
         }
     },
 )
@@ -48,7 +65,10 @@ export const {
   getCategorySuccess,
   getDetailCategoryFailed,
   getDetailCategoryStart,
-  getDetailCategorySuccess
+  getDetailCategorySuccess,
+  getSuggestCategoryFailed,
+  getSuggestCategoryStart,
+  getSuggestCategorySuccess
 } = categorySlide.actions
 
 export default categorySlide.reducer

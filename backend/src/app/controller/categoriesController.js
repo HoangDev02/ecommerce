@@ -97,7 +97,46 @@ const categoriesController = {
         }catch(err) {
             console.log(err);
         }
-    }
+    },
+    getSuggestNewCategories: async (req, res) => {
+        try {
+          const categoryId = req.body._id;
+          const category = await categoryModel.aggregate([
+            {
+              $match: {
+                id: categoryId
+              }
+            },
+            {
+              $lookup: {
+                from: "productmodels",
+                let: { categoryId: "$_id" },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: {
+                        $ne: ["$category_product_id", "$$categoryId"]
+                      }
+                    }
+                  },
+                  {
+                    $sample: {
+                      size: 3 // Số lượng sản phẩm gợi ý giới hạn ở đây
+                    }
+                  },
+                ],
+                as: "suggestedProducts"
+              }
+            },
+            {
+                $limit: 1 // Giới hạn số lượng danh mục chỉ lấy ra 1
+            }
+          ]);
+          res.status(200).json(category);
+        } catch (err) {
+          console.log(err);
+        }
+      }
     
 }
 module.exports = categoriesController
