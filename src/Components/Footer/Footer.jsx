@@ -1,6 +1,6 @@
 import React from 'react';
 import './footer.css'
-
+import logo from '../../assets/logo.png'
 const Footer = () => {
     return (
         <footer>
@@ -10,19 +10,18 @@ const Footer = () => {
                     <div class="full">
                     <div class="logo_footer">
                     <img
-                        src="https://classic.vn/wp-content/uploads/2022/04/logo-shopee.png"
-                        width="30"
-                        height="30"
+                        src= {logo}
+                        width="70"
+                        height="70"
                         className="d-inline-block align-top"
                         alt="React Bootstrap logo"
                     />
-                    Shein
                     </div>
                     <div class="information_f">
                         <p><strong>ADDRESS:</strong>
                         28 White tower, Street Name New York City, USA</p>
-                        <p><strong>TELEPHONE:</strong> +91 987 654 3210</p>
-                        <p><strong>EMAIL:</strong> yourmain@gmail.com</p>
+                        <p><strong>TELEPHONE:</strong> +0354026833</p>
+                        <p><strong>EMAIL:</strong> lecanhhoang123@gmail.com</p>
                     </div>
                     </div>
                 </div>
@@ -66,7 +65,7 @@ const Footer = () => {
                         </div>
                         <div class="form_sub">
                             <form>
-                            <fieldset>
+                                <fieldset>
                                 <div class="field">
                                 <input
                                     type="email"
@@ -75,7 +74,7 @@ const Footer = () => {
                                 />
                                 <input type="submit" value="Subscribe" />
                                 </div>
-                            </fieldset>
+                                </fieldset>
                             </form>
                         </div>
                         </div>

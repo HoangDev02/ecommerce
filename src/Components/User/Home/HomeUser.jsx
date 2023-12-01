@@ -1,73 +1,106 @@
-import React from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from "react";
+import { Row, Col, Card, CardGroup, Container } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getProductHome } from '../../../redux/API/apiRequestProduct';
-import { getCategoryHome } from '../../../redux/API/apiRequestCategory';
-import './homeUser.scss';
+import { getProductHome } from "../../../redux/API/apiRequestProduct";
+import { getCategoryHome } from "../../../redux/API/apiRequestCategory";
+import "./homeUser.css";
+import ReactPaginate from "react-paginate";
 
 const HomeUser = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
-  // const productList = useSelector((state) => state.products.products?.allProduct);
-  const categoriesList = useSelector((state) => state.categories.categories?.allCategory);
+  const [currentStartIndex, setCurrentStartIndex] = useState(0);
+  const categoriesList = useSelector(
+    (state) => state.categories.categories?.allCategory
+  );
+  const newCategory = categoriesList?.map((item) => item.newCategory);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
+    //[GET] api category
     getCategoryHome(dispatch);
   }, [dispatch]);
 
   return (
-    <section className="product_section layout_padding">
-      <div className="container">
+    <Container>
+      <section className="product_section layout_padding">
+        <CardGroup className="card-group-category">
+          <Row xs={4} md={6} className="g-4">
+            {categoriesList?.map((item) => (
+              <div className="row">
+                {Array.from({ length: 1 }).map((_, idx) => (
+                  <Col key={idx}>
+                    <Card className="card-category">
+                      <Link to={`/category/${item.slug}`}>
+                        <Card.Img
+                          variant="top"
+                          src={item.img}
+                          className="card-img-categories "
+                        />
+                        <Card.Body>
+                          <Card.Title className="category-name">
+                            {item.name}
+                          </Card.Title>
+                        </Card.Body>
+                      </Link>
+                    </Card>
+                  </Col>
+                ))}
+              </div>
+            ))}
+          </Row>
+        </CardGroup>
         <div className="heading_container heading_center">
-          <h2 className='pt-5'>
-            Exclusive
-            <span> Products</span>
+          <h2 className="pt-5">
+            Sản phẩm
+            <span> đọc quyền</span>
           </h2>
         </div>
-        <div className="row">
+        <Row>
           {categoriesList?.map((item) => (
             <div>
-              <h1>{item.name}</h1>
-              <div  className="row" >
-              {
-                item.newCategory?.map((product) => (
-                  <div className="col-sm-6 col-md-4 col-lg-4" key={product._id}>
+              {item.newCategory.length > 0 && (
+                <h3 className="text-start category-name">{item.name}</h3>
+              )}
+              <Row>
+                {item.newCategory?.map((product) => (
+                  <div className="col-sm-6 col-md-4 col-lg-3" key={product._id}>
                     <div className="box">
                       <Col>
-                        <Card>
-                          <div className="option_container">
-                            <div className="options">
-                              <Link to={`/product/${product.slug}`} className="option1">
-                                Details
-                              </Link>
-                            </div>
-                          </div>
+                        <Card className="card-product">
                           <div className="img-box">
-                            <Card.Img variant="top" src={product.img} alt="image" />
+                            {product?.img.length > 0 && (
+                              <Card.Img
+                                variant="top"
+                                src={`${process.env.REACT_APP_BACKEND_URL}${product.img[0]}`}
+                                alt="image"
+                                className="card-img-product"
+                              />
+                            )}
                           </div>
                           <Card.Body className="detail-box">
-                            <Card.Title>{product.name}</Card.Title>
+                            <Card.Title>
+                              {" "}
+                              <Link to={`/product/${product.slug}`}>
+                                {product.name}
+                              </Link>
+                            </Card.Title>
                             <Card.Title>${product.price}</Card.Title>
                           </Card.Body>
                         </Card>
                       </Col>
                     </div>
-               </div>
-                ))
-              }
-              </div>
+                  </div>
+                ))}
+              </Row>
             </div>
           ))}
-        </div>
-        <div className="btn-box">
-          <Link to="/product/">View All products</Link>
-        </div>
-      </div>
-    </section>
+        </Row>
+      </section>
+    </Container>
   );
 };
 

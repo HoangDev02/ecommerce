@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { loginFailed, loginStart, loginSuccess, logoutFailed, logoutStart, logoutSuccess, registerFailed, registerStart, registerSuccess } from '../authSlice'
 import {deleteUsersFailed, deleteUsersStart, deleteUsersSuccess, getUsersFailed, getUsersStart, getUsersSuccess} from '../userSlide'
-import Cookies from 'js-cookie'
 
 export const loginUser = async(user,dispatch,navigate) => {
     dispatch(loginStart());
@@ -34,8 +33,8 @@ export const registerUser = async(user,dispatch,navigate) => {
 export const getAllUsers = async(accessToken, dispatch, axiosJWT) => {
     dispatch(getUsersStart());
     try{
-        const res = await axiosJWT.get(`${process.env.REACT_APP_BACKEND_URL}user/`,{
-            headers: {token: ` ${accessToken}`}
+        const res = await axiosJWT.get(`${process.env.REACT_APP_BACKEND_URL}user`,{
+            headers: {token: `${accessToken}`},
         })
         dispatch(getUsersSuccess(res.data))
     }catch(err) {
@@ -58,7 +57,7 @@ export const logOut = async (dispatch, id, navigate, accessToken, axiosJWT) => {
     dispatch(logoutStart());
     try {
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}user/logout`, id, {
-        headers: { token: `Bearer ${accessToken}` },
+        headers: { token: `${accessToken}` },
       });
       dispatch(logoutSuccess());
       navigate("/login");
