@@ -2,13 +2,26 @@ const express = require('express')
 const router = express.Router()
 const productController = require('../app/controller/productController')
 const middlewate = require('../app/middleware/middleware')
+const multer = require('multer');
+const path = require('path');
+// Cấu hình Multer
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/') // Thư mục lưu trữ tập tin
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+  }
+});
 
-router.post('/create',productController.createProduct)
+const upload = multer({ storage: storage });
+
+router.post('/create',upload.array('images', 5),productController.createProduct)
 router.put('/update/:id',productController.updateProduct)
 router.delete('/delete/:id',middlewate.verifyUser,productController.deleteProduct)
-
+router.get('/uploads', express.static('uploads'));
 //get product
-router.get('/search', productController.searchProduct)
+router.get('/suggest', productController.getSuggestNewCategories)
 router.get('/edit/:id', productController.editProduct)
 router.get('/home', productController.getProducts)
 router.get('/', productController.getProductsAll)

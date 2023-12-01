@@ -10,6 +10,9 @@ const categoryModel = mongoose.Schema(
             type: String,
             require: true
         },
+        bard: {
+            type: String
+        },
         slug: {
             type: String, 
             slug: 'name' ,

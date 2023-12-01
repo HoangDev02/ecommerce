@@ -14,6 +14,10 @@ const orderSchema = new mongoose.Schema({
       price: { type: Number, required: true },
     },
   ],
+  cardId : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Carts'
+  },
   createdAt: {
     type: Date,
     default: Date.now,

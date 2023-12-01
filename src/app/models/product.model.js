@@ -21,12 +21,15 @@ const productModel = new mongoose.Schema(
 
         },
         img: {
-            type: String,     
+            type: [String],     
             required: true
         },
         price: {
             type: Number,
             required: true
+        },
+        rootPrice : {
+            type: Number,
         },
         slug: {
             type: String, 

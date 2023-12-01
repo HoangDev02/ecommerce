@@ -46,6 +46,8 @@ app.use('/search', searchRouter )
 app.use('/user', userRouter)
 app.use('/category', categoriesRouter)
 app.use('/product', porductRouter)
+app.use('/uploads', express.static('uploads'));
+
 // app.use('/', homeRouter)
 app.use('/cart', cart)
 app.use('/stripe',stripe)

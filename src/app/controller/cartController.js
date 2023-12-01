@@ -2,6 +2,8 @@ const cartModel = require('../models/cartModel');
 const userModel = require('../models/user.model');
 const productModel = require('../models/product.model');
 
+const calculateSubtotal = (products) => products.reduce((acc, item) => acc + item.total, 0);
+
 const cartController = {
   getCarts: async (req, res, next) => {
     try {
@@ -25,29 +27,37 @@ const cartController = {
   updateCartQuantity: async (req, res, next) => {
     const { productId, quantity } = req.body;
     const userId = req.params.userId;
-  
+
     try {
       let cart = await cartModel.findOne({ userId });
-  
       if (!cart) {
         return res.status(404).json({ message: 'Cart not found' });
       }
-      const product = cart.products.find((p) => p.productId.toString() === productId);
-      if (!product) {
+
+      // Tìm sản phẩm và cập nhật số lượng và tổng tiền
+      const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+      if (productIndex === -1) {
         return res.status(404).json({ message: 'Product not found in cart' });
       }
-      // Update the quantity
-      product.quantity = quantity < 0 ? 0 : quantity;
-      product.total = product.price * product.quantity;
-  
-      // Recalculate the subtotal
-      cart.subtotal = cart.products.reduce((acc, item) => acc + item.total, 0);
-      await cart.save();
-  
+      
+      // Sử dụng toán tử $set để cập nhật mảng sản phẩm
+      const update = {
+        $set: {
+          [`products.${productIndex}.quantity`]: quantity < 0 ? 0 : quantity,
+        }
+      };
+
+      // Cập nhật giỏ hàng và tính lại subtotal
+      cart.products[productIndex].quantity = quantity < 0 ? 0 : quantity;
+      cart.products[productIndex].total = cart.products[productIndex].price * quantity;
+      cart.subtotal = calculateSubtotal(cart.products);
+
+      // Sử dụng findOneAndUpdate để đảm bảo atomicity
+      cart = await cartModel.findOneAndUpdate({ userId }, update, { new: true });
+      
       return res.status(200).json(cart);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server error' });
+      next(error);
     }
   },
   
