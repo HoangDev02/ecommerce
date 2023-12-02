@@ -5,16 +5,17 @@ const dealSale = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
-  products: [
-    {
-      productId: { type: mongoose.Schema.Types.ObjectId },
-    },
-  ],
+  productId: { 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "productModel",
+    required: true,
+  },
   active: {
     type: Boolean,
     default: true,
   },
   quantity: Number,
+  total: Number,
   saleDate: {
     type: Date,
     required: true,

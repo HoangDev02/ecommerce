@@ -7,7 +7,10 @@ const banner = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'productModel'
         },
-        img: String,
+        img: {
+            type: [String],     
+            required: true
+        },
         description: String,
     }
 )

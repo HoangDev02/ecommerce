@@ -61,6 +61,7 @@ const categoriesController = {
                               }
                             }
                           },
+                          
                           {
                             $limit: 9 // Số lượng product giới hạn ở đây
                           }
@@ -88,7 +89,7 @@ const categoriesController = {
                         from: "productmodels",
                         localField: "_id",
                         foreignField: "category_product_id",
-                        as: "category"
+                        as: "category" 
                     }
                 }  
             ])

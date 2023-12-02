@@ -11,6 +11,10 @@ const productModel = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "user"
         },
+        dealSaleId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "DealSale"
+        },
         name: {
             type: String,
             required: true

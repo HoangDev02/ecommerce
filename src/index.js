@@ -20,7 +20,8 @@ const stripe = require('./router/script')
 const payment = require('./router/paymentRouter')
 const order = require('./router/orderRouter')
 const searchRouter = require('./router/searchRouter')
-
+const bannerRouter = require('./router/bannerRouter')
+const dealRouter = require('./router/DealSaleRouter')
 const port = 8080;
 dotenv.config()
 
@@ -46,6 +47,11 @@ app.use('/search', searchRouter )
 app.use('/user', userRouter)
 app.use('/category', categoriesRouter)
 app.use('/product', porductRouter)
+app.use('/banners',bannerRouter)
+app.use('/dealSale',dealRouter)
+
+//file status
+app.use('/banners', express.static('banners'))
 app.use('/uploads', express.static('uploads'));
 
 // app.use('/', homeRouter)
