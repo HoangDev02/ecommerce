@@ -1,19 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel, Card, Button, Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./carousels.css";
+import { Link, useNavigate } from "react-router-dom";
 
+import axios from "axios";
 const Carousels = () => {
-  const mainProduct = [
+  const [banner, setBanner] = useState([]);
+
+  useEffect(() => {
+    const APIBaner = () => {
+      axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}banners`)
+        .then((response) => {
+          setBanner(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+          setBanner([]);
+        });
+    };
+    APIBaner();
+  }, []);
+  console.log(banner);
+
+  // const mainProduct = [
+  //   {
+  //     name: "Galaxy A14 Bản 5G",
+  //     price: "3.190K",
+  //     description: "Cam kết giá rẻ",
+  //     image:
+  //       "https://bizweb.dktcdn.net/100/497/960/themes/923878/assets/slider_1.jpg?1698914220683",
+  //   },
+  // ];
+  const sideProducts = [
     {
-      name: "Galaxy A14 Bản 5G",
-      price: "3.190K",
-      description: "Cam kết giá rẻ",
       image:
         "https://bizweb.dktcdn.net/100/497/960/themes/923878/assets/slider_1.jpg?1698914220683",
     },
-  ];
-  const sideProducts = [
     {
       image:
         "https://bizweb.dktcdn.net/100/497/960/themes/923878/assets/slider_1.jpg?1698914220683",
@@ -25,45 +49,50 @@ const Carousels = () => {
   ];
   return (
     <Container className="p-0">
-      <Row noGutters>
+      <Row>
         <Col md={8}>
           <Carousel className="main-carousel">
-            {mainProduct.map((items) => (
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src={items.image}
-                  alt={items.name}
-                />
-                <Carousel.Caption>
-                  <h3>{items.name}</h3>
-                  <p>{items.description}</p>
-                  <p className="price">{items.price}</p>
-                  <p className="old-price">{items.oldPrice}</p>
-                  <Button variant="warning" className="buy-now-btn">
-                    MUA NGAY
-                  </Button>
-                </Carousel.Caption>
-              </Carousel.Item>
-            ))}
+            {Array.isArray(banner) &&
+              banner.map((item) => (
+                <Carousel.Item key={item._id}>
+                  <img
+                    className="d-block w-100"
+                    src={`${process.env.REACT_APP_BACKEND_URL}${item.img[0]}`}
+                    alt={item.description}
+                  />
+                  {Array.isArray(item.newBaner) &&
+                    item.newBaner.map((product) => (
+                      <Carousel.Caption key={product._id}>
+                        <Link to={`/product/${product.slug}`}>
+                          {product.name}
+                        </Link>
+                        {/* Các phần tử khác của product */}
+                      </Carousel.Caption>
+                    ))}
+                </Carousel.Item>
+              ))}
           </Carousel>
         </Col>
         <Col md={4}>
-          {sideProducts.map((product, index) => (
-            <Carousel
-              className="mb-2 side-product-card"
-              key={`side-product-${index}`}
-            >
-              <img
-                className="d-block w-100"
-                src={product.image}
-                alt={product.name}
-              />
-            </Carousel>
+          {banner.map((product, index) => (
+            <Card className="text-white">
+              {/* {product.img.map((item) => ( */}
+                <Card.Img
+                  key={index}
+                  src={`${process.env.REACT_APP_BACKEND_URL}${product.img[1]}`}
+                  style={{
+                    cursor: "pointer",
+                    maxWidth: "100%",
+                    height: "8.5rem",
+                    margin: "5px",
+                  }}
+                />
+              {/* ))} */}
+            </Card>
           ))}
         </Col>
       </Row>
-      <Row className="justify-content-md-center">
+      <Row className="justify-content-md-center pt-5">
         <Col md="auto">
           <Card style={{ width: "18rem" }}>
             <Card.Body>

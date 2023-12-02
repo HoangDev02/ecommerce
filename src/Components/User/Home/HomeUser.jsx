@@ -8,6 +8,7 @@ import { getProductHome } from "../../../redux/API/apiRequestProduct";
 import { getCategoryHome } from "../../../redux/API/apiRequestCategory";
 import "./homeUser.css";
 import ReactPaginate from "react-paginate";
+import DealOfDay from "../DealOfDay/DealOfDay ";
 
 const HomeUser = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
@@ -52,6 +53,8 @@ const HomeUser = () => {
               </div>
             ))}
           </Row>
+          {/* font-end deal */}
+          <DealOfDay />
         </CardGroup>
         <div className="heading_container heading_center">
           <h2 className="pt-5">
