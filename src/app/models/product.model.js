@@ -22,7 +22,6 @@ const productModel = new mongoose.Schema(
         description: {
             type: String,
             required: true
-
         },
         img: {
             type: [String],     
@@ -31,9 +30,6 @@ const productModel = new mongoose.Schema(
         price: {
             type: Number,
             required: true
-        },
-        rootPrice : {
-            type: Number,
         },
         slug: {
             type: String, 

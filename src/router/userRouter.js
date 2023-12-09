@@ -9,12 +9,12 @@ router.get('/', middlewate.verifyToken,userController.getUsers)
 router.get('/:id', userController.getUser)
 
 //post
-router.post('/refresh', userController.requestRefreshToken)
+router.post('/refresh', userController.refreshAccessToken)
 router.post('/register' , userController.isRegister);
 router.post('/login', userController.isLogin)
-router.post('/logout', userController.logOut)
+router.post('/logout',userController.logOut)
 
 //delete
-router.delete('/delete/:id', middlewate.verifyUser,userController.deleteUser)
+router.delete('/delete/:id', middlewate.verifyAdmin,userController.deleteUser)
 
 module.exports = router

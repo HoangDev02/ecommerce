@@ -22,11 +22,18 @@ const order = require('./router/orderRouter')
 const searchRouter = require('./router/searchRouter')
 const bannerRouter = require('./router/bannerRouter')
 const dealRouter = require('./router/DealSaleRouter')
+const commentRouter = require('./router/commentRouter')
+const techSpecsRouter = require('./router/techSpecsRouter')
+const reviewRouter = require('./router/reviewRouter')
 const port = 8080;
 dotenv.config()
 
 app.use(cookieParser());
-app.use(cors({ credentials: true, origin: true }));
+app.use(cors({
+    // Cho phép domain của front-end
+    origin: 'http://localhost:3000',
+    credentials: true, // Điều này cho phép trình duyệt gửi cookies
+  }));
 
 //change text in jason
 app.use(express.json());
@@ -49,7 +56,9 @@ app.use('/category', categoriesRouter)
 app.use('/product', porductRouter)
 app.use('/banners',bannerRouter)
 app.use('/dealSale',dealRouter)
-
+app.use('/comment', commentRouter)
+app.use('/techSpecs', techSpecsRouter)
+app.use('/review', reviewRouter)
 //file status
 app.use('/banners', express.static('banners'))
 app.use('/uploads', express.static('uploads'));

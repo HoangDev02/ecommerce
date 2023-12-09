@@ -16,15 +16,15 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/create',upload.array('images', 5),productController.createProduct)
-router.put('/update/:id',productController.updateProduct)
-router.delete('/delete/:id',middlewate.verifyUser,productController.deleteProduct)
+router.post('/create',upload.array('images', 5),middlewate.verifyAdmin,productController.createProduct)
+router.put('/update/:id',middlewate.verifyAdmin,productController.updateProduct)
+router.delete('/delete/:id',middlewate.verifyAdmin,productController.deleteProduct)
 router.get('/uploads', express.static('uploads'));
 //get product
 router.get('/suggest', productController.getSuggestNewCategories)
-router.get('/edit/:id', productController.editProduct)
+router.get('/edit/:id',middlewate.verifyAdmin, productController.editProduct)
 router.get('/home', productController.getProducts)
-router.get('/', productController.getProductsAll)
+router.get('/',middlewate.verifyAdmin, productController.getProductsAll)
 router.get('/sort', productController.SortProductAscending)
 router.get('/:slug', productController.getProduct)
 router.get('/:slug', productController.getProduct)
