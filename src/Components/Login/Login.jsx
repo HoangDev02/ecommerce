@@ -30,11 +30,11 @@ const Login = () => {
     }
   }
 
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate("/");
+  //   }
+  // }, [user]);
   return (
     <Container className="login-container">
       <h2 className="login-title">Log in</h2>

@@ -34,7 +34,7 @@ export const getAllUsers = async(accessToken, dispatch, axiosJWT) => {
     dispatch(getUsersStart());
     try{
         const res = await axiosJWT.get(`${process.env.REACT_APP_BACKEND_URL}user`,{
-            headers: {token: `${accessToken}`},
+            headers: { authorization: `Bearer ${accessToken}`},
         })
         dispatch(getUsersSuccess(res.data))
     }catch(err) {
@@ -46,18 +46,18 @@ export const deleteUser = async(accessToken,dispatch,id,axiosJWT) => {
     dispatch(deleteUsersStart());
     try {
         const res = await axiosJWT.delete(`${process.env.REACT_APP_BACKEND_URL}user/delete/`+ id, {
-            headers: {token: `${accessToken}`}
+            headers: { authorization: `Bearer ${accessToken}`}
         })
         dispatch(deleteUsersSuccess(res.data))
     } catch (error) {
-        dispatch(deleteUsersFailed(error.response.data))
+        dispatch(deleteUsersFailed())
     }
 }
 export const logOut = async (dispatch, id, navigate, accessToken, axiosJWT) => {
     dispatch(logoutStart());
     try {
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}user/logout`, id, {
-        headers: { token: `${accessToken}` },
+      await axiosJWT.post(`${process.env.REACT_APP_BACKEND_URL}user/logout`, id, {
+        headers: { authorization: `Bearer ${accessToken}` },
       });
       dispatch(logoutSuccess());
       navigate("/login");

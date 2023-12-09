@@ -61,11 +61,12 @@ const CartUser = () => {
         subtotal += product.price * product.quantity;
       }
     }
-    return subtotal;
+    // Định dạng số thành chuỗi tiền tệ Việt Nam
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(subtotal);
   };
   return (
     <Container>
-      {carts?.products.length > 0 ? (
+      {carts?.products?.length > 0 ? (
         <div className="cart-wrapper">
           <div className="cart-container">
             <h2 className="cart-title">Giỏ hàng</h2>
@@ -82,7 +83,10 @@ const CartUser = () => {
                       <span>{product.quantity}</span>
                       <button onClick={() => handleUpdateQuantity(product.productId, product.quantity + 1)}>+</button>
                     </div>
-                    <div className="cart-product-price">${product.price}</div>
+                    <div className="cart-product-price">{new Intl.NumberFormat("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        }).format(product.price)}</div>
                     <button className="cart-product-delete" onClick={() => handleDeleteCart(product.productId)}>
                       Xóa
                     </button>
@@ -92,7 +96,9 @@ const CartUser = () => {
             </div>
             <div className="cart-total">
               <span className="cart-total-label">Tổng tiền:</span>
-              <span className="cart-total-amount">${calculateSubtotal(carts.products)}</span>
+              <span className="cart-total-amount">
+                
+                ${calculateSubtotal(carts.products)}</span>
             </div>
             <PayButton cartItems={carts} />
             <ToastContainer />

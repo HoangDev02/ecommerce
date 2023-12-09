@@ -25,7 +25,6 @@ const FilterableProductTable = () => {
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
-
   const handlePriceChange = (e) => {
     setSortByPrice(e.target.value);
     setCurrentPage(0);

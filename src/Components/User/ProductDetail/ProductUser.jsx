@@ -10,14 +10,20 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import ImageZoom from "react-image-zoom";
+import Comment from "../comment/Comment";
+import SpecificationTable from "../techSpecs/SpecificationTable";
+import Promotion from "../promotion/Promotion";
+import Reviews from "../reviews/Reviews";
 
 const ProductUser = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.login?.currentUser);
-  const productDetail = useSelector(
+  const productDetails = useSelector(
     (state) => state.products.detailProduct?.product
   );
+  const productDetail = productDetails[0];
+
   const categoriesList = useSelector(
     (state) => state.categories.suggestCategory?.suggest
   );
@@ -25,7 +31,6 @@ const ProductUser = () => {
   const userId = user?._id;
   const navigate = useNavigate();
   const [currentImage, setCurrentImage] = useState("");
-
   const handleAddCart = (e) => {
     e.preventDefault();
     if (!user) {
@@ -41,14 +46,14 @@ const ProductUser = () => {
     };
     addCart(newProduct, dispatch, navigate, userId);
     // Show toast notification
-    toast.success("Sản phẩm đã được thêm vào giỏ hàng", { autoClose: 3000 });
+    toast.success("Sản phẩm đã được thêm vào giỏ hàng", { autoClose: 2000 });
   };
 
   useEffect(() => {
     getProduct(dispatch, id);
     getSuggestCategory(dispatch);
   }, [dispatch, id]);
-  
+
   useEffect(() => {
     if (productDetail?.img?.length) {
       setCurrentImage(productDetail.img[0]);
@@ -58,8 +63,8 @@ const ProductUser = () => {
   const handleImageClick = (image) => {
     setCurrentImage(image);
   };
-  const imageProduct = productDetail?.img.map((e) => e);
-  console.log(imageProduct);
+  // const imageProduct = productDetail?.img.map((e) => e);
+  // console.log(imageProduct);
   return (
     <Container className="product_section layout_padding">
       <Row>
@@ -76,7 +81,7 @@ const ProductUser = () => {
 
             {/* Danh sách các hình ảnh nhỏ để click chọn */}
             <div className="product-thumbnails">
-              {productDetail?.img.map((image, index) => (
+              {productDetail?.img?.map((image, index) => (
                 <Card.Img
                   key={index}
                   variant="top"
@@ -93,13 +98,44 @@ const ProductUser = () => {
               ))}
             </div>
           </div>
+          <SpecificationTable productId={productDetail?._id} />
+          <Reviews productId={productDetail?._id} />
         </Col>
         <Col md={6}>
           <div className="card_content">
             <div className="card_description">
               <h3 className="Card_name">{productDetail?.name}</h3>
               <p className="card_id">SKU: {productDetail?._id}</p>
-              <p className="card_price">{productDetail?.price}.000 VNĐ</p>
+              {productDetail?.newDealSale?.length > 0 ? (
+                <div>
+                  {productDetail?.newDealSale.map((deal, index) => (
+                    <div key={index} className="productDetail-sale">
+                      <p className="card_price">
+                        Giá khuyến mãi:{" "}
+                        {new Intl.NumberFormat("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        }).format(deal.total)}
+                      </p>
+                      <p className="card-price-productDetail">
+                        Giá gốc:{" "}
+                        {new Intl.NumberFormat("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        }).format(productDetail.price)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="card_price">
+                  Giá:{" "}
+                  {new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(productDetail?.price)}
+                </p>
+              )}
               <p className="card_description">{productDetail?.description}</p>
               <Form onSubmit={handleAddCart}>
                 <Form.Group controlId="quantity">
@@ -115,6 +151,8 @@ const ProductUser = () => {
                     }}
                   />
                 </Form.Group>
+                <Promotion productId={productDetail?._id} />
+
                 <Button type="submit" variant="outline-danger">
                   Buy Now
                 </Button>
@@ -123,7 +161,7 @@ const ProductUser = () => {
           </div>
         </Col>
       </Row>
-      <ToastContainer position="top-right" autoClose={3000} />
+      {/* <ToastContainer position="top-right" autoClose={3000} />
       <h1 className="pt-5">Các sản phẩm gợi ý</h1>
       {categoriesList?.map((item) => (
         <div className="row">
@@ -155,7 +193,8 @@ const ProductUser = () => {
             </div>
           ))}
         </div>
-      ))}
+      ))} */}
+      <Comment productId={productDetail?._id} />
     </Container>
   );
 };

@@ -23,17 +23,25 @@ const DealOfDay = () => {
   const countdownTimer = "0:10:15";
   const mapDealSale = dealSale.map((e) => e.newDealSale);
 
-  console.log(mapDealSale);
   return (
     <Container fluid className="deal-of-day-container">
       {/* Khung thông tin deal */}
-      <Row className="justify-content-md-center deal-info">
-        <Col md={12} className="text-center">
-          <div className="countdown-timer">{countdownTimer}</div>
-          <h2 className="deal-title">DEAL NGON GIÁ SỐC</h2>
-        </Col>
-      </Row>
-
+     {
+      dealSale?.map(sale => (
+       <div>
+         {
+          sale.newDealSale.map((item) => (
+            <Row className="justify-content-md-center deal-info">
+            <Col md={12} className="text-center">
+              <div className="countdown-timer">{item.saleTime}</div>
+              <h2 className="deal-title">DEAL NGON GIÁ SỐC</h2>
+            </Col>
+          </Row>
+          ))
+        }
+       </div>
+      ))
+     }
       {dealSale?.length > 0 && (
         <Row>
           {dealSale.map(
@@ -66,7 +74,10 @@ const DealOfDay = () => {
                             {" "}
                             {/* Make sure to add a unique key here */}
                             <Card.Text className="product-price">
-                              {item.total}
+                              {new Intl.NumberFormat("vi-VN", {
+                                style: "currency",
+                                currency: "VND",
+                              }).format(item.total)}
                             </Card.Text>
                             <Card.Text className="product-quantity">
                               Số lượng {item.quantity}
@@ -74,14 +85,16 @@ const DealOfDay = () => {
                           </div>
                         ))}
                         <Card.Text className="product-original-price">
-                          {product.price}
+                          {new Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(product.price)}
                         </Card.Text>
                       </div>
                       <div className="product-meta">
                         <Card.Text className="product-discount">
                           {product.discount}
                         </Card.Text>
-                    
                       </div>
                     </Card.Body>
                   </Card>

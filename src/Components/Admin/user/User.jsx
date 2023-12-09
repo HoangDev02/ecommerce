@@ -26,7 +26,6 @@ const User = () => {
     }
     if (user?.accessToken) {
       getAllUsers(user?.accessToken, dispatch, axiosInstance) 
-
     }
   }, []);
 

@@ -3,8 +3,8 @@ import jwt_decode from "jwt-decode";
 
 const refreshToken = async () => {
   try {
-    const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}user/refresh`, { 
-      withCredentials: true,
+    const res = await axios.post(`/user/refresh`, { 
+      withCredentials: true
     });
     console.log(res);
     return res.data; // Return only the response data
@@ -25,9 +25,8 @@ export const createAxios = (user, dispatch, stateSuccess) => {
           ...user,
           accessToken: data.accessToken,
         };
-      //  console.log(refreshUser);
         dispatch(stateSuccess(refreshUser));
-        config.headers["token"] = data.accessToken;
+        config.headers["authorization"] = "Bearer " + data.accessToken;
       }
       return config;
     },
@@ -37,3 +36,4 @@ export const createAxios = (user, dispatch, stateSuccess) => {
   );
   return newInstance;
 };
+

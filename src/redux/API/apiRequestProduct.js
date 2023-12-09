@@ -31,20 +31,20 @@ export const getProduct = async(dispatch, slug) => {
         dispatch(getProductsFailed())
     }
 }
-export const updateProduct = async(product,dispatch,id,navigate) => {
+export const updateProduct = async(product,dispatch,id,navigate,axiosJWT) => {
     dispatch(updateProductStart());
     try {
-        const res = await axios.put(`${process.env.REACT_APP_BACKEND_URL}product/update/${id}`, product)
+        const res = await axiosJWT.put(`${process.env.REACT_APP_BACKEND_URL}product/update/${id}`, product)
         dispatch(updateProductSuccess(res.data))
         navigate('/admin/product')
     } catch (error) {
         dispatch(updateProductFail())
     }
 }
-export const ShowUpdateProduct = async(dispatch,id,navigate) => {
+export const ShowUpdateProduct = async(dispatch,id,navigate,axiosJWT) => {
     dispatch(getSingleProductStart());
     try {
-        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}product/edit/${id}`)
+        const res = await axiosJWT.get(`${process.env.REACT_APP_BACKEND_URL}product/edit/${id}`)
         dispatch(getSingleProductSuccess(res.data))
         navigate(`/product/edit/${id}`)
     } catch (error) {
@@ -55,7 +55,7 @@ export const deleteProduct = async(accessToken,dispatch,id,axiosJWT) => {
     dispatch(deleteProductStart());
     try {
         const res = await axiosJWT.delete(`${process.env.REACT_APP_BACKEND_URL}product/delete/${id}`, {
-            headers: {token: `${accessToken}`}
+            headers: {authorization: `Bearer ${accessToken}`}
         })
         dispatch(deleteProductSuccess(res.data))
     } catch (error) {

@@ -5,6 +5,9 @@ import productSlide from './productSlide';
 import cartSlide from './cartSlide'
 import categorySlice from './categorySlice';
 import searchSlice from './searchSlice';
+import commentSlice from './commentSlide';
+import techSpecsSlice from './techSpecsSlide';
+import reviewsSlice from './reviewsSlide';
 import {
     persistStore,
     persistReducer,
@@ -21,7 +24,17 @@ const persistConfig = {
     version: 1,
     storage,
   };
-const rootReducer = combineReducers({ auth: authReducer, users: userSlide, products: productSlide, carts: cartSlide, categories: categorySlice, searchs: searchSlice});
+const rootReducer = combineReducers({ 
+  auth: authReducer, 
+  users: userSlide, 
+  products: productSlide, 
+  carts: cartSlide, 
+  categories: categorySlice, 
+  searchs: searchSlice, 
+  comments: commentSlice,
+  techSpecs: techSpecsSlice,
+  reviews: reviewsSlice
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({

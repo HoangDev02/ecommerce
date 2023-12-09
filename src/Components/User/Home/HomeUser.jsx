@@ -8,7 +8,7 @@ import { getProductHome } from "../../../redux/API/apiRequestProduct";
 import { getCategoryHome } from "../../../redux/API/apiRequestCategory";
 import "./homeUser.css";
 import ReactPaginate from "react-paginate";
-import DealOfDay from "../DealOfDay/DealOfDay ";
+import DealOfDay from "../DealOfDay/DealOfDay";
 
 const HomeUser = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
@@ -91,7 +91,12 @@ const HomeUser = () => {
                                 {product.name}
                               </Link>
                             </Card.Title>
-                            <Card.Title>${product.price}</Card.Title>
+                            <Card.Title>
+                              {new Intl.NumberFormat("vi-VN", {
+                                style: "currency",
+                                currency: "VND",
+                              }).format(product.price)}
+                            </Card.Title>
                           </Card.Body>
                         </Card>
                       </Col>

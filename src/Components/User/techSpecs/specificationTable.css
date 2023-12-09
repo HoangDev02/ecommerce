@@ -1,0 +1,40 @@
+.specification-table {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  margin: 20px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table {
+  border: 1px solid #ddd;
+}
+
+.table-header {
+  background-color: #f2f2f2;
+}
+
+.table-header th {
+  text-align: left;
+  padding: 8px;
+}
+
+.table-body td {
+  padding: 8px;
+  border-top: 1px solid #ddd;
+}
+
+/* Phong cách cho các hàng xen kẽ */
+.table-body tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.table-body tr:hover {
+  background-color: #eaeaea;
+}
+
+/* Định dạng cho cột Thời gian bảo hành */
+.table th:last-child,
+.table td:last-child {
+  text-align: center;
+}

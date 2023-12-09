@@ -6,7 +6,7 @@ export const getCart = async(accessToken, dispatch,userId) => {
    dispatch(getCartsStart());
     try{
         const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}cart/${userId}`, {
-            headers: {token: `${accessToken}`}
+            headers: {authorization: `Bearer ${accessToken}`}
         })
         console.log(res);
         dispatch(getCartsSuccess(res.data))
@@ -19,7 +19,7 @@ export const getCarts = async(accessToken, dispatch) => {
     dispatch(getCartsStart());
      try{
          const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}cart/`, {
-             headers: {token: `${accessToken}`}
+             headers: {authorization: `Bearer ${accessToken}`}
          })
          console.log(res);
          dispatch(getCartsSuccess(res.data))

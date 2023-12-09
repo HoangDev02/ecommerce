@@ -24,29 +24,7 @@ const Carousels = () => {
   }, []);
   console.log(banner);
 
-  // const mainProduct = [
-  //   {
-  //     name: "Galaxy A14 Bản 5G",
-  //     price: "3.190K",
-  //     description: "Cam kết giá rẻ",
-  //     image:
-  //       "https://bizweb.dktcdn.net/100/497/960/themes/923878/assets/slider_1.jpg?1698914220683",
-  //   },
-  // ];
-  const sideProducts = [
-    {
-      image:
-        "https://bizweb.dktcdn.net/100/497/960/themes/923878/assets/slider_1.jpg?1698914220683",
-    },
-    {
-      image:
-        "https://bizweb.dktcdn.net/100/497/960/themes/923878/assets/slider_1.jpg?1698914220683",
-    },
-    {
-      image:
-        "https://bizweb.dktcdn.net/100/497/960/themes/923878/assets/slider_1.jpg?1698914220683",
-    },
-  ];
+
   return (
     <Container className="p-0">
       <Row>
