@@ -12,6 +12,7 @@ router.get('/:id', userController.getUser)
 router.post('/refresh', userController.refreshAccessToken)
 router.post('/register' , userController.isRegister);
 router.post('/login', userController.isLogin)
+router.post('/changePassword', userController.changePassword)
 router.post('/logout',userController.logOut)
 
 //delete

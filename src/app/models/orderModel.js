@@ -12,12 +12,14 @@ const orderSchema = new mongoose.Schema({
       name: { type: String, required: true },
       quantity: { type: Number, required: true },
       price: { type: Number, required: true },
+      total: { type: Number, required: true },
     },
   ],
-  cardId : {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Carts'
-  },
+  subtotal: { type: Number, required: true },
+  // cardId : {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Carts'
+  // },
   createdAt: {
     type: Date,
     default: Date.now,

@@ -2,7 +2,15 @@ const userModel = require("../models/user.model");
 const refreshTokens = require("../models/refreshTokens");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const nodemailer = require("nodemailer");
+// Cấu hình Nodemailer
+const transporter = nodemailer.createTransport({
+  service: "gmail", // Sử dụng Gmail, hoặc thay thế bằng dịch vụ email khác
+  auth: {
+    user: "lecanhhoang123@gmail.com", // Email của bạn
+    pass: "qlmq ivcy iwcg unfc", // Mật khẩu email hoặc mã ứng dụng
+  },
+});
 const userController = {
   getUser: async (req, res, next) => {
     try {
@@ -70,6 +78,33 @@ const userController = {
       });
 
       const user = await newUser.save();
+
+      // Gửi email xác nhận
+      const mailOptions = {
+        from: "lecanhhoang123@gmail.com",
+        to: newUser.email,
+        subject: "Chào mừng đến với ecommerce!",
+        text: `Chào ${newUser.username},
+      
+        Chúc mừng bạn đã trở thành thành viên mới của chúng tôi tại ecommerce! Chúng tôi rất hào hứng được chào đón bạn.
+        
+        Tại ecommerce, chúng tôi cam kết mang đến cho bạn những trải nghiệm tốt nhất với ecommerce:
+        
+        - [Tính Năng 1]
+        - [Tính Năng 2]
+        - [Lợi Ích Đặc Biệt]
+        
+        Nếu bạn cần bất kỳ sự hỗ trợ nào, vui lòng liên hệ với chúng tôi qua lecanhhoang123@gmail.com. Đội ngũ của chúng tôi luôn sẵn lòng hỗ trợ bạn.`,
+      };
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+          res.status(500).json("Error in sending email");
+        } else {
+          console.log("Email sent: " + info.response);
+          res.status(200).json(user);
+        }
+      });
       res.status(200).json(user);
     } catch (err) {
       next(err);
@@ -148,10 +183,38 @@ const userController = {
 
       res
         .status(200)
-        .json({ accessToken: newAccessToken, refreshToken: newRefreshToken});
+        .json({ accessToken: newAccessToken, refreshToken: newRefreshToken });
     });
   },
+  changePassword: async (req, res, next) => {
+    try {
+      const { username, oldPassword, newPassword } = req.body;
 
+      // Tìm người dùng dựa trên username
+      const user = await userModel.findOne({ username: username });
+      if (!user) {
+        return res.status(404).json("User not found");
+      }
+
+      // Kiểm tra mật khẩu cũ
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      if (!isMatch) {
+        return res.status(400).json("Old password is incorrect");
+      }
+
+      // Mã hóa mật khẩu mới
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+      // Cập nhật mật khẩu mới vào cơ sở dữ liệu
+      user.password = hashedPassword;
+      await user.save();
+
+      res.status(200).json("Password updated successfully");
+    } catch (err) {
+      next(err);
+    }
+  },
   logOut: async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) return res.status(401).json("No token to logout");

@@ -5,6 +5,7 @@ const paymentController = {
     payment: async (req, res) => {
         try {
             const cartItems = req.body.cartItems.products;
+            const subtotal = req.body.subtotal;
             const userId = req.body.userId; // Lấy userId từ body của yêu cầu
 
             // Xóa sản phẩm khỏi giỏ hàng sau khi thanh toán thành công
@@ -18,8 +19,10 @@ const paymentController = {
                 products: cartItems.map((item) => ({
                     name: item.name,
                     quantity: item.quantity,
-                    price: item.price
-                }))
+                    price: item.price,
+                    total: item.total,
+                })),
+                subtotal: subtotal
             });
             await order.save();
 

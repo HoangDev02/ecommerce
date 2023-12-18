@@ -8,7 +8,6 @@ const app = express()
 const morgan = require('morgan');
 const cors = require("cors");
 
-
 const connect = require("../src/app/connect/connect")
 
 //router
@@ -49,6 +48,7 @@ app.use(session({
 
 app.use(methodOverride('_method'))
 app.use(morgan('combined'))
+
 //router
 app.use('/search', searchRouter )
 app.use('/user', userRouter)
