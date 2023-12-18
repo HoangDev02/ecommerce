@@ -76,4 +76,58 @@ input.search {
     margin-top: 20px;
 }
   
-  
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar {
+  cursor: pointer;
+  border-radius: 50%; /* Circular avatar */
+  transition: border 0.3s ease;
+}
+
+.avatar:hover {
+  border: 2px solid #007bff; /* Highlight color on hover */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #ffffff;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(-20px);
+  z-index: 1;
+}
+
+.user-dropdown:hover .dropdown-content {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.navbar-username, .navbar-logout {
+  padding: 10px 20px;
+  display: block;
+  color: #333;
+  text-decoration: none;
+}
+
+.navbar-logout {
+  background: #f4f4f4;
+}
+
+.navbar-logout:hover {
+  background-color: #e2e2e2;
+}
+
+/* Additional styling for username */
+.navbar-username {
+  font-weight: bold;
+}

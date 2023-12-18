@@ -21,6 +21,7 @@ const CartUser = () => {
   const msg = useSelector((state) => state.carts?.msg);
 
   const handleDeleteCart = (productId) => {
+
     deleteCart(productId, dispatch, userId)
       .then(() => {
         getCart(accessToken, dispatch, userId);
@@ -100,7 +101,7 @@ const CartUser = () => {
                 
                 ${calculateSubtotal(carts.products)}</span>
             </div>
-            <PayButton cartItems={carts} />
+            <PayButton cartItems={carts} subtotal={carts.subtotal} total={carts.products.total} />
             <ToastContainer />
           </div>
         </div>

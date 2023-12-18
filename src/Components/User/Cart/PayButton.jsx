@@ -5,21 +5,20 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const PayButton = ({ cartItems }) => {
+const PayButton = ({ cartItems, subtotal, total }) => {
   const user = useSelector((state) => state.auth.login?.currentUser);
   const navigate = useNavigate();
-
   const handleCheckout = () => {
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}payment/`, {
         cartItems,
         userId: user._id,
+        subtotal: subtotal,
+        total: total
       })
       .then((res) => {
         if (res.data.url) {
           console.log(res.data.url);
-        } else {
-          toast.success('Payment successful', { autoClose: 3000 });
         }
       })  
       .catch((err) => {

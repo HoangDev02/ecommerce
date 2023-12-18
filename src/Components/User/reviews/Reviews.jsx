@@ -12,7 +12,7 @@ function Reviews({ productId }) {
   return (
     <Accordion defaultActiveKey="0">
       {
-      reviewsList.map((review) => ((
+      reviewsList?.map((review) => ((
         <Accordion.Item eventKey="0">
         <Accordion.Header>reviews {review.author?.username}</Accordion.Header>
         <Accordion.Body>
