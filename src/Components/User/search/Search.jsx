@@ -1,8 +1,8 @@
-import React from 'react';
-import { Row, Col, Card, CardGroup } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Row, Col, Card, CardGroup } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Search = () => {
   const productList = useSelector((state) => state.searchs.search?.allSearch);
@@ -22,18 +22,15 @@ const Search = () => {
                 <div className="box">
                   <Col>
                     <Card>
-                      <div className="option_container">
-                        <div className="options">
-                          <Link to={`/product/${item.slug}`} className="option1">
-                            Details
-                          </Link>
-                        </div>
-                      </div>
                       <div className="img-box">
-                        <Card.Img variant="top" src={item.img} alt="image" />
+                        <Card.Img variant="top" src={item.img[0]} alt="image" />
                       </div>
                       <Card.Body className="detail-box">
-                        <Card.Title>{item.name}</Card.Title>
+                        <Link to={`/product/${item.slug}`}>
+                          {" "}
+                          <Card.Title>{item.name}</Card.Title>
+                        </Link>
+
                         <Card.Title>${item.price}</Card.Title>
                       </Card.Body>
                     </Card>

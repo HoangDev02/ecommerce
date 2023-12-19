@@ -6,7 +6,12 @@
 a {
   text-decoration: none;  
 }
-
+.carousel-caption a {
+  font-size: 20px;
+  color: #fff;
+  background-color: #000000;
+  padding: 10px 10px;
+}
 .btn {
   width: max-content;
   display: inline-block;

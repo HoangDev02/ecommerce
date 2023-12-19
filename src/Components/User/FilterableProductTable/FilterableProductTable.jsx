@@ -25,10 +25,7 @@ const FilterableProductTable = () => {
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
-  const handlePriceChange = (e) => {
-    setSortByPrice(e.target.value);
-    setCurrentPage(0);
-  };
+
 
   const handleSortOrderChange = (e) => {
     setSortOrder(e.target.value);
@@ -72,11 +69,6 @@ const FilterableProductTable = () => {
               </div>
               <div className="col-8 text-end">
                 <div className="filter-section">
-                  <select value={sortByPrice} onChange={handlePriceChange}>
-                    <option value="">Sort by Price</option>
-                    <option value="lowToHigh">Giá cao đến thấp</option>
-                    <option value="highToLow">Giá thấp đến cao</option>
-                  </select>
                   <select value={sortOrder} onChange={handleSortOrderChange}>
                     <option value="">Sort Order</option>
                     <option value="asc">Tăng dần</option>
@@ -92,16 +84,6 @@ const FilterableProductTable = () => {
                 <div className="box">
                   <Col>
                     <Card>
-                      <div className="option_container">
-                        <div className="options">
-                          <Link
-                            to={`/product/${item.slug}`}
-                            className="option1"
-                          >
-                            Details
-                          </Link>
-                        </div>
-                      </div>
                       <div className="img-box">
                         {item?.img.length > 0 && (
                           <Card.Img

@@ -29,17 +29,13 @@ const Category = () => {
               <Col key={category._id}>
                 <Card>
                   <Link to={`/product/${category.slug}`}>
-                    <Card.Img variant="top" src={category.img} alt="image" />
+                    <Card.Img variant="top" src={`${process.env.REACT_APP_BACKEND_URL}${category.img[0]}`} alt="image" />
+                    <Card.Title>{category.name}</Card.Title>
                   </Link>
                   <Card.Body>
-                    <Card.Title>{category.name}</Card.Title>
                     <Card.Text>${category.price}</Card.Text>
                   </Card.Body>
-                  <Card.Footer>
-                    <Link to={`/product/${category.slug}`} className="btn btn-primary">
-                      Details
-                    </Link>
-                  </Card.Footer>
+               
                 </Card>
               </Col>
             ))
