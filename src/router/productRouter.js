@@ -24,7 +24,7 @@ router.get('/uploads', express.static('uploads'));
 router.get('/suggest', productController.getSuggestNewCategories)
 router.get('/edit/:id',middlewate.verifyAdmin, productController.editProduct)
 router.get('/home', productController.getProducts)
-router.get('/',middlewate.verifyAdmin, productController.getProductsAll)
+router.get('/', productController.getProductsAll)
 router.get('/sort', productController.SortProductAscending)
 router.get('/:slug', productController.getProduct)
 router.get('/:slug', productController.getProduct)
