@@ -20,10 +20,7 @@ function Comment({ productId }) {
   const [newComment, setNewComment] = useState("");
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentContent, setEditCommentContent] = useState("");
-  // DELETE comment
-  const handleDeleteComment = (commentId) => {
-    deleteCommentById(commentId, dispatch, axiosJWT);
-  };
+
   const handlePostComment = async () => {
     if (newComment.trim() !== "") {
       const data = {
@@ -32,7 +29,7 @@ function Comment({ productId }) {
         text: newComment,
       };
       try {
-        await postComment(data, axiosJWT,user?.accessToken);
+        await postComment(data, axiosJWT, user?.accessToken);
         setNewComment("");
         await getCommentsByUserId(productId, dispatch);
       } catch (error) {
@@ -42,6 +39,11 @@ function Comment({ productId }) {
       alert("update fail");
     }
   };
+  // DELETE comment
+  const handleDeleteComment = async (commentId) => {
+    await deleteCommentById(commentId, axiosJWT, user?.accessToken);
+    getCommentsByUserId(productId, dispatch);
+  };
   // UPDATE comment
   const handleUpdateComment = (commentId) => {
     console.log(commentId);
@@ -49,7 +51,7 @@ function Comment({ productId }) {
       const dataComment = {
         text: editCommentContent,
       };
-      updateCommentById(commentId, dataComment, axiosJWT);
+      updateCommentById(commentId, dataComment, axiosJWT, user?.accessToken);
       setEditCommentId(null);
       setEditCommentContent("");
       getCommentsByUserId(productId, dispatch);
@@ -133,12 +135,7 @@ function Comment({ productId }) {
                     >
                       Edit
                     </button>
-                    <button
-                      className="comment-button delete"
-                      onClick={() => handleDeleteComment(comment._id)}
-                    >
-                      Delete
-                    </button>
+                    <div className="user-action" onClick={() => handleDeleteComment(comment._id)}>Delete</div>
                   </div>
                 )}
               </div>

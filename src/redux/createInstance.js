@@ -1,11 +1,13 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
-export const refreshToken = async () => {
+export const refreshToken = async (accessToken) => {
   try {
     const res = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}user/refresh`,
-      {},
+      {
+        headers: { authorization: `Bearer ${accessToken}` },
+      },
       {
         withCredentials: true,
       }
@@ -36,7 +38,7 @@ export const createAxios = (user, dispatch, stateSuccess) => {
 
       if (decodedToken.exp * 1000 < date.getTime()) {
         try {
-          const data = await refreshToken();
+          const data = await refreshToken(user.refreshToken);
           const refreshUser = {
             ...user,
             accessToken: data.accessToken,

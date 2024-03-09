@@ -50,7 +50,7 @@ const User = () => {
               {userItem.username}
             </div>
             <div className="user-email">{userItem.email}</div>
-            <div className="user-action" onClick={() => handleDeleteUser(userItem._id)}>...</div>
+            <div className="user-action" onClick={() => handleDeleteUser(userItem._id)}>Delete</div>
           </div>
         ))}
       </div>
