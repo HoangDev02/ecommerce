@@ -68,7 +68,7 @@ app.use('/cart', cart)
 app.use('/stripe',stripe)
 app.use('/payment',payment)
 app.use('/order',order)
-
+app.use('/vnpay', require('./router/vnpayRouter'))
 
 
 app.listen(port, () => {

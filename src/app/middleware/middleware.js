@@ -1,11 +1,10 @@
 const jwt = require('jsonwebtoken');
-
+const Product = require('../models/product.model');
 const middleware = {
     verifyToken: (req, res, next) => {
         const authHeader = req.headers.authorization;
         if (authHeader) {
             const token = authHeader.split(" ")[1];
-            console.log(token);
             jwt.verify(token, process.env.JWT_ACCESS_KEY, (err, user) => {
                 if (err) {
                     return res.status(403).json("Token is invalid");
@@ -21,7 +20,9 @@ const middleware = {
 
     verifyUser: (req, res, next) => {
         middleware.verifyToken(req, res, () => {
-            if (req.user.id === req.params.id || req.user.isAdmin) {
+            console.log("user" + req.user.id  );
+            console.log("params" + req.params.id);
+            if (req.user.id === req.params.id || req.user.isAdmin || userHasAccess(req.user.id, req.params.id)) {
                 next();
             } else {
                 res.status(403).json("You do not have access");
@@ -39,5 +40,13 @@ const middleware = {
         });
     },
 };
-
+async function userHasAccess(userId, productId) {
+    const product = await Product.findById(productId);
+  
+    if (product && product.userId === userId) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 module.exports = middleware;
