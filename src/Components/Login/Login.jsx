@@ -1,11 +1,11 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./login.css";
-import { Link, useNavigate, } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../redux/API/apiRequest";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
-import {loginFailed,loginSuccess} from '../../redux/authSlice'
+import { loginFailed, loginSuccess } from "../../redux/authSlice";
 
 const Login = () => {
   const [username, setUserName] = useState("");
@@ -18,17 +18,18 @@ const Login = () => {
     e.preventDefault();
     const newUser = {
       username: username,
-      password: password
+      password: password,
     };
 
     try {
       setError(""); // Xóa thông báo lỗi trước đó (nếu có)
       const res = await loginUser(newUser, dispatch, navigate);
+      
       dispatch(loginSuccess(res.data));
     } catch (err) {
       setError("Wrong username or password"); // Đặt thông báo lỗi
     }
-  }
+  };
 
   // useEffect(() => {
   //   if (user) {
@@ -42,18 +43,32 @@ const Login = () => {
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formUsername">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="text" placeholder="Enter your username" onChange={(e) => setUserName(e.target.value)} className="form-control-login" />
+          <Form.Control
+            type="text"
+            placeholder="Enter your username"
+            onChange={(e) => setUserName(e.target.value)}
+            className="form-control-login"
+          />
         </Form.Group>
         <Form.Group controlId="formPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}  className="form-control-login"/>
+          <Form.Control
+            type="password"
+            placeholder="Enter your password"
+            onChange={(e) => setPassword(e.target.value)}
+            className="form-control-login"
+          />
         </Form.Group>
-        <button className="login-button" type="submit">Continue</button>
+        <button className="login-button" type="submit">
+          Continue
+        </button>
       </Form>
       <div className="login-register">Don't have an account yet?</div>
-      <Link className="login-register-link" to="/register">Register one for free</Link>
+      <Link className="login-register-link" to="/register">
+        Register one for free
+      </Link>
     </Container>
   );
-}
+};
 
 export default Login;

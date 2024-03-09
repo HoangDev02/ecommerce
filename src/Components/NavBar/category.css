@@ -1,0 +1,11 @@
+.container-category {
+    background-color: white;
+}
+.list-submenu {
+    display: flex;
+    padding: 10px 0px 10px 10px;
+}
+.list-submenu .list-submenu-text {
+    margin-left: 5rem;
+    color: black;
+}

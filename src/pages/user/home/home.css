@@ -1,0 +1,6 @@
+.backrgound {
+  background-image: url("../../../assets/background.webp");
+  background-color: rgb(255, 225, 225);
+  background-position: left top; /* Đặt vị trí của hình ảnh nền ở góc trái trên */
+  background-repeat: repeat-x; 
+}

@@ -1,81 +1,109 @@
+nav.navbar.navbar.navbar-expand-lg.navbar-light {
+  padding: 0;
+}
 .nav-center {
-  margin-left: 25%;
+  margin-left: auto;
 }
-  .navbar-brand {
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-  
-  .navbar-brand:hover {
-    color: #ff6f00;
-  }
-  
-  .navbar-link {
-    color: rgb(0, 0, 0);
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    margin-right: 20px;
-    transition: all 0.3s ease;
-  }
-  
-  .navbar-link:hover {
-    color: #ff6f00;
-    transform: scale(1.1);
-  }
-  
-  .navbar-right {
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar-icon {
-    color: rgb(0, 0, 0);
-    margin-right: 10px;
-    transition: all 0.3s ease;
-  }
-  
-  .navbar-icon:hover {
-    color: #ff6f00;
-  }
-  
-  .navbar-username {
-    color: rgb(0, 0, 0);
-    font-size: 14px;
-    font-weight: 500;
-    margin-right: 10px;
-    transition: all 0.3s ease;
-  }
-  
-  .navbar-username:hover {
-    color: #ff6f00;
-    text-decoration: underline;
-  }
-  
-  .navbar-logout {
-    color: rgb(0, 0, 0);
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-  
-  .navbar-logout:hover {
-    color: #ff6f00;
-  }
-  
-  .navbar-cart {
-    position: relative;
-    animation: shake 1s infinite;
-  }
+.navbar-brand {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.navbar-container {
+  background-color: #E30019;
+}
+.navbar-brand:hover {
+  color: #ff6f00;
+}
+
+.navbar-link {
+  color: rgb(0, 0, 0);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  margin-right: 20px;
+  transition: all 0.3s ease;
+}
+
+.navbar-link:hover {
+  color: #ff6f00;
+  transform: scale(1.1);
+}
+.navbar-icon {
+  position: relative;
+}
+
+.navbar-icon .badge {
+  position: absolute;
+  top: -8px; /* Điều chỉnh vị trí top để phù hợp với biểu tượng giỏ hàng */
+  right: -8px; /* Điều chỉnh vị trí right để phù hợp với biểu tượng giỏ hàng */
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  margin-left: 10rem;
+}
+
+.navbar-icon {
+  color: rgb(0, 0, 0);
+  margin-right: 10px;
+  transition: all 0.3s ease;
+}
+
+.navbar-icon:hover {
+  color: #ff6f00;
+}
+
+.navbar-username {
+  color: rgb(0, 0, 0);
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+}
+
+.navbar-username:hover {
+  color: #ff6f00;
+  text-decoration: underline;
+}
+
+.navbar-logout {
+  color: rgb(0, 0, 0);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.navbar-logout:hover {
+  color: #ff6f00;
+}
+.logo {
+  display: flex;
+  flex-direction: row;
+}
+.logo .logo-span {
+  margin-top: 20px;
+  text-align: center;
+  color: white;
+}
+.navbar-cart {
+  position: relative;
+  animation: shake 1s infinite;
+}
 input.search {
-    padding: 2px 10px;
-    margin-top: 20px;
+  padding: 2px 10px;
+  margin-top: 20px;
 }
-  
+
 .user-dropdown {
   position: relative;
   display: inline-block;
@@ -97,7 +125,7 @@ input.search {
   right: 0;
   background-color: #ffffff;
   min-width: 160px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   overflow: hidden;
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -112,7 +140,8 @@ input.search {
   transform: translateY(0);
 }
 
-.navbar-username, .navbar-logout {
+.navbar-username,
+.navbar-logout {
   padding: 10px 20px;
   display: block;
   color: #333;

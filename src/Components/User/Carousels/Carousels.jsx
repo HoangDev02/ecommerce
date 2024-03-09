@@ -22,14 +22,12 @@ const Carousels = () => {
     };
     APIBaner();
   }, []);
-  console.log(banner);
-
 
   return (
-    <Container className="p-0">
-      <Row>
+    <Container className="p-3 banner">
+      <Row className="carousel-home">
         <Col md={8}>
-          <Carousel className="main-carousel">
+          <Carousel className="main-carousel ">
             {Array.isArray(banner) &&
               banner.map((item) => (
                 <Carousel.Item key={item._id}>
@@ -44,7 +42,6 @@ const Carousels = () => {
                         <Link to={`/product/${product.slug}`}>
                           {product.name}
                         </Link>
-                        {/* Các phần tử khác của product */}
                       </Carousel.Caption>
                     ))}
                 </Carousel.Item>
@@ -52,21 +49,19 @@ const Carousels = () => {
           </Carousel>
         </Col>
         <Col md={4}>
-          {banner.map((product, index) => (
-            <Card className="text-white">
-              {/* {product.img.map((item) => ( */}
-                <Card.Img
-                  key={index}
-                  src={`${process.env.REACT_APP_BACKEND_URL}${product.img[1]}`}
-                  style={{
-                    cursor: "pointer",
-                    maxWidth: "100%",
-                    height: "8.5rem",
-                    margin: "5px",
-                  }}
-                />
-              {/* ))} */}
-            </Card>
+          {banner.slice(0, 2).map((product, index) => (
+            <div className="banner-item" key={index}>
+              <img
+                src={`${process.env.REACT_APP_BACKEND_URL}${product.img[1]}`}
+                alt={`product-${index}`}
+              />
+              <div className="overlay">
+                <div className="overlay-content">
+                  <h3>{product.title}</h3>
+                  <p>{product.description}</p>
+                </div>
+              </div>
+            </div>
           ))}
         </Col>
       </Row>

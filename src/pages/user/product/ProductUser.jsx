@@ -14,7 +14,7 @@ const ProductUser = () => {
     
 
     return (
-        <div>
+        <div >
           {
             productList.map((item) => {
                 return (

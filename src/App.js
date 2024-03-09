@@ -18,6 +18,7 @@ import HomeAdmin from "./Components/Admin/Home/Home";
 import Product from "./Components/Admin/product/Product";
 import UpdateProduct from "./Components/Admin/product/UpdateProduct";
 import NavigationBar from "./pages/NavigationBar";
+import RouterAdmin from "./pages/RouterAdmin";
 function App() {
   return (
     <Router>
@@ -25,10 +26,17 @@ function App() {
       <div className="App">
         <Routes>
           {/* admin */}
-            <Route path="/admin" element={<HomeAdmin />} />
-            <Route path="/admin/user" element={<User />} />
-            <Route path="/admin/product" element={<Product />} />
-            <Route path="/product/edit/:id?" element={<UpdateProduct />} />
+          <Route
+            path="/admin"
+            element={
+              <RouterAdmin>
+                <HomeAdmin />
+              </RouterAdmin>
+            }
+          />
+          <Route path="/admin/user" element={ <RouterAdmin><User /></RouterAdmin>} />
+          <Route path="/admin/product" element={<RouterAdmin><Product /></RouterAdmin>} />
+          <Route path="/product/edit/:id?" element={<RouterAdmin><UpdateProduct /></RouterAdmin>} />
           {/* User */}
 
           <Route path="/" element={<Home />}></Route>

@@ -18,20 +18,33 @@ const Search = () => {
         {productList?.length > 0 ? (
           <div className="row">
             {productList.map((item) => (
-              <div className="col-sm-6 col-md-4 col-lg-4" key={item._id}>
+              <div className="col-sm-6 col-md-4 col-lg-3" key={item._id}>
                 <div className="box">
-                  <Col>
-                    <Card>
+                <Col>
+                    <Card className="card-product">
                       <div className="img-box">
-                        <Card.Img variant="top" src={item.img[0]} alt="image" />
+                        {item?.img.length > 0 && (
+                          <Card.Img
+                            variant="top"
+                            src={`${process.env.REACT_APP_BACKEND_URL}${item.img[0]}`}
+                            alt="image"
+                            className="card-img-product"
+                          />
+                        )}
                       </div>
                       <Card.Body className="detail-box">
-                        <Link to={`/product/${item.slug}`}>
+                        <Card.Title>
                           {" "}
-                          <Card.Title>{item.name}</Card.Title>
-                        </Link>
-
-                        <Card.Title>${item.price}</Card.Title>
+                          <Link to={`/product/${item.slug}`}>
+                            {item.name}
+                          </Link>
+                        </Card.Title>
+                        <Card.Title>
+                          {new Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(item.price)}
+                        </Card.Title>
                       </Card.Body>
                     </Card>
                   </Col>

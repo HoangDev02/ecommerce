@@ -1,8 +1,10 @@
 import axios from "axios";
 import {getCommentStart,getCommentSuccess,getCommentsFailed} from "../commentSlide"
-export const postComment = async (data,axiosJWT) => {
+export const postComment = async (data,axiosJWT,accessToken) => {
   try {
-    const response = await axiosJWT.post(`${process.env.REACT_APP_BACKEND_URL}comment/create`, data);
+    const response = await axiosJWT.post(`${process.env.REACT_APP_BACKEND_URL}comment/create`, data ,{
+      headers: { authorization: `Bearer ${accessToken}`}
+  });
     console.log(response.data);
   } catch (error) {
     console.error("Error posting comment:", error);

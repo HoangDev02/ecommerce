@@ -1,4 +1,9 @@
-/* Cập nhật màu sắc */
+/* Style chung */
+body {
+  font-family: 'Roboto', sans-serif;
+  color: var(--text-color);  
+}
+
 :root {
   --primary-color: #3d9970;
   --text-color: #343a40;
@@ -13,6 +18,7 @@
   --color-bg: #1f1f38;
   --color-bg1: #2e2e2e;
   --color-bg2: #3f3f3f;
+  --color-body-bg: #CFCFCF;
 
   --container-width-lg: 80%;
   --container-width-md: 90%;
@@ -24,8 +30,7 @@
 /* Import font */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-/* Style chung */
-body {
-  font-family: 'Roboto', sans-serif;
-  color: var(--text-color);  
+#root {
+
+
 }

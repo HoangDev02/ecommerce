@@ -12,6 +12,8 @@ export const loginUser = async(user,dispatch,navigate) => {
         dispatch(loginSuccess(res.data));
         if(res.data.isAdmin) {
            navigate('/admin')
+        }else if(res.data.status === false){
+            navigate('/admin')
         }else {
             navigate('/')
         }
@@ -53,15 +55,20 @@ export const deleteUser = async(accessToken,dispatch,id,axiosJWT) => {
         dispatch(deleteUsersFailed())
     }
 }
-export const logOut = async (dispatch, id, navigate, accessToken, axiosJWT) => {
+export const logOut = async (dispatch, navigate,refreshToken) => {
     dispatch(logoutStart());
     try {
-      await axiosJWT.post(`${process.env.REACT_APP_BACKEND_URL}user/logout`, id, {
-        headers: { authorization: `Bearer ${accessToken}` },
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}user/logout`, {}, {
+        headers: {
+          'Cookie': `refreshToken=${refreshToken}`
+        },
+        withCredentials: true,
       });
-      dispatch(logoutSuccess());
-      navigate("/login");
+      if (response.status === 200) {
+        dispatch(logoutSuccess());
+        navigate("/login");
+      }
     } catch (err) {
       dispatch(logoutFailed());
     }
-  };
+};
