@@ -5,5 +5,5 @@ const middleware = require('../app/middleware/middleware')
 
 router.post('/create', middleware.verifyAdmin,dealineSaleController.createDealSale)
 router.get('/', dealineSaleController.getProductDealSale)
-router.delete('/:id', middleware.verifyAdmin,dealineSaleController.deleteProductInTime)
+router.delete('/:id',dealineSaleController.deleteProductInTime)
 module.exports = router

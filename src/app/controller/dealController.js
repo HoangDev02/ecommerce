@@ -50,7 +50,6 @@ const dealineSale = {
 
       saleDate.setHours(parseInt(saleTime[0]), parseInt(saleTime[1]), 0, 0);
 
-
       const dealSaleEnd = new Date(saleDate.getTime() + 1 * 60 * 60 * 1000); // 1 giờ sau saleDate
       console.log("saleDate : " + dealSaleEnd)
       console.log("data : " + now)

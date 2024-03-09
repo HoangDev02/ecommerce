@@ -121,13 +121,7 @@ const productController = {
   },
   getSuggestNewCategories: async (req, res) => {
     try {
-      const categoryId = req.body._id;
       const category = await categoryModel.aggregate([
-        // {
-        //   $match: {
-        //     id: categoryId
-        //   }
-        // },
         {
           $lookup: {
             from: "productmodels",

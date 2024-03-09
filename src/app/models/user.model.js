@@ -23,6 +23,10 @@ const UserModel = new mongooes.Schema({
     isAdmin: {
         type:Boolean,
         default: false
+    },
+    status: {
+        type: Boolean,
+        default: true
     }
 })
 module.exports = mongooes.model("user", UserModel)

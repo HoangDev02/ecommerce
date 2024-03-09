@@ -5,11 +5,13 @@ const middleware = {
         const authHeader = req.headers.authorization;
         if (authHeader) {
             const token = authHeader.split(" ")[1];
+            console.log(token);
             jwt.verify(token, process.env.JWT_ACCESS_KEY, (err, user) => {
                 if (err) {
                     return res.status(403).json("Token is invalid");
                 }
                 req.user = user;
+                console.log("user " + req.user.id);
                 next();
             });
         } else {

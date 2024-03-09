@@ -221,8 +221,8 @@ const userController = {
 
     const deletedToken = await refreshTokens.deleteOne({ refreshToken });
 
-    if (!deletedToken) {
-      return res.status(404).json("Token not found");
+    if (deletedToken.deletedCount === 0) {
+        return res.status(404).json("Token not found");
     }
 
     // Clear the refreshToken cookie
