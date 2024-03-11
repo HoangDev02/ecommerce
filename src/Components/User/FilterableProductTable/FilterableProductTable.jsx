@@ -82,32 +82,33 @@ const FilterableProductTable = () => {
                 <div className="col-sm-6 col-md-4 col-lg-3" key={item._id}>
                   <div className="box">
                     <Col>
-                      <Card className="card-product">
-                        <div className="img-box">
-                          {item?.img.length > 0 && (
-                            <Card.Img
-                              variant="top"
-                              src={`${process.env.REACT_APP_BACKEND_URL}${item.img[0]}`}
-                              alt="image"
-                              className="card-img-product"
-                            />
-                          )}
-                        </div>
-                        <Card.Body className="detail-box">
-                          <Card.Title>
-                            {" "}
-                            <Link to={`/product/${item.slug}`}>
-                              {item.name}
-                            </Link>
-                          </Card.Title>
-                          <Card.Title>
-                            {new Intl.NumberFormat("vi-VN", {
-                              style: "currency",
-                              currency: "VND",
-                            }).format(item.price)}
-                          </Card.Title>
-                        </Card.Body>
-                      </Card>
+                    <Card className="card-product">
+                            <div className="img-box">
+                              {item?.img.length > 0 && (
+                                <Card.Img
+                                  variant="top"
+                                  src={`${process.env.REACT_APP_BACKEND_URL}${item.img[0]}`}
+                                  alt="image"
+                                  className="card-img-product"
+                                />
+                              )}
+                            </div>
+                            <Card.Body className="detail-box">
+                              <Card.Title>
+                                <Link to={`/product/${item.slug}`}>
+                                  <span className="product-span-name">
+                                    {item.name}
+                                  </span>
+                                </Link>
+                              </Card.Title>
+                              <Card.Title>
+                                {new Intl.NumberFormat("vi-VN", {
+                                  style: "currency",
+                                  currency: "VND",
+                                }).format(item.price)}
+                              </Card.Title>
+                            </Card.Body>
+                          </Card>
                     </Col>
                   </div>
                 </div>

@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 const Carousels = () => {
   const [banner, setBanner] = useState([]);
-
+  const isMobile = window.innerWidth <= 768;
   useEffect(() => {
     const APIBaner = () => {
       axios
@@ -24,9 +24,9 @@ const Carousels = () => {
   }, []);
 
   return (
-    <Container className="p-3 banner">
+    <Container fluid={isMobile} className="p-3 banner" >
       <Row className="carousel-home">
-        <Col md={8}>
+        <Col md={8} sm={12}>
           <Carousel className="main-carousel ">
             {Array.isArray(banner) &&
               banner.map((item) => (
@@ -48,7 +48,7 @@ const Carousels = () => {
               ))}
           </Carousel>
         </Col>
-        <Col md={4}>
+        <Col md={4} sm={12}>
           {banner.slice(0, 2).map((product, index) => (
             <div className="banner-item" key={index}>
               <img
@@ -65,43 +65,48 @@ const Carousels = () => {
           ))}
         </Col>
       </Row>
-      <Row className="justify-content-md-center pt-5">
-        <Col md="auto">
-          <Card style={{ width: "18rem" }}>
-            <Card.Body>
-              <Card.Title>🚚 Vận chuyển MIỄN PHÍ</Card.Title>
-              <Card.Text>Trong khu vực TPHCM</Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-
-        <Col md="auto">
-          <Card style={{ width: "18rem" }}>
-            <Card.Body>
-              <Card.Title>🔄 Đổi trả MIỄN PHÍ</Card.Title>
-              <Card.Text>Trong vòng 30 NGÀY</Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-
-        <Col md="auto">
-          <Card style={{ width: "20rem" }}>
-            <Card.Body>
-              <Card.Title>💳 Tiến hành THANH TOÁN</Card.Title>
-              <Card.Text>Với nhiều PHƯƠNG THỨC</Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-
-        <Col md="auto">
-          <Card style={{ width: "18rem" }}>
-            <Card.Body>
-              <Card.Title>🔙 100% HOÀN TIỀN</Card.Title>
-              <Card.Text>nếu sản phẩm lỗi</Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+      <Row className="pt-10">
+      <Col md={12} lg={6}>
+        <Row>
+          <Col>
+            <Card>
+              <Card.Body>
+                <Card.Title>🚚 Vận chuyển MIỄN PHÍ</Card.Title>
+                <Card.Text>Trong khu vực TPHCM</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col>
+            <Card >
+              <Card.Body>
+                <Card.Title>🔄 Đổi trả MIỄN PHÍ</Card.Title>
+                <Card.Text>Trong vòng 30 NGÀY</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Col>
+      <Col md={12} lg={6}>
+        <Row>
+          <Col>
+            <Card >
+              <Card.Body>
+                <Card.Title>💳 Tiến hành THANH TOÁN</Card.Title>
+                <Card.Text>Với nhiều PHƯƠNG THỨC</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col>
+            <Card >
+              <Card.Body>
+                <Card.Title>🔙 100% HOÀN TIỀN</Card.Title>
+                <Card.Text>nếu sản phẩm lỗi</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
     </Container>
   );
 };

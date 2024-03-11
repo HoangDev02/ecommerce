@@ -16,6 +16,7 @@ import Logo from "../../assets/logo.png";
 import { faCartShopping, faSearch } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { getCart } from "../../redux/API/apiRequestcart";
+import SearchBar from "../searchBar/SearchBar";
 
 const NavBar = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
@@ -52,7 +53,6 @@ const NavBar = () => {
       <Container fluid className="navbar-container">
         <Container>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-
           <Navbar.Collapse id="responsive-navbar-nav">
             <Navbar.Brand href="/" className="logo">
               <img
@@ -85,25 +85,11 @@ const NavBar = () => {
               <Link to={`/cart/${id}`} className="navbar-link text-white">
                 Tra cứu đơn hàng
               </Link>
-              {searchVisible && (
-                <Form className="d-flex" onSubmit={handleSearchClick}>
+             
                   {/* <div className="search-box"> */}
-                  <Form.Control
-                    type="text"
-                    placeholder="Search"
-                    name="search"
-                    value={searchQuery}
-                    onChange={handleSearchInputChange}
-                    className="search"
-                  />
-                </Form>
-              )}
-              <FontAwesomeIcon
-                icon={faSearch}
-                className="navbar-icon text-white"
-                onClick={handleSearchClick}
-              />
-
+                  <SearchBar/>
+             
+     
               <Link
                 to={`cart/${id}`}
                 className={`navbar-icon ${

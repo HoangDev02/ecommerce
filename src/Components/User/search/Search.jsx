@@ -20,7 +20,7 @@ const Search = () => {
             {productList.map((item) => (
               <div className="col-sm-6 col-md-4 col-lg-3" key={item._id}>
                 <div className="box">
-                <Col>
+                  <Col>
                     <Card className="card-product">
                       <div className="img-box">
                         {item?.img.length > 0 && (
@@ -34,9 +34,10 @@ const Search = () => {
                       </div>
                       <Card.Body className="detail-box">
                         <Card.Title>
-                          {" "}
                           <Link to={`/product/${item.slug}`}>
-                            {item.name}
+                            <span className="product-span-name">
+                              {item.name}
+                            </span>
                           </Link>
                         </Card.Title>
                         <Card.Title>

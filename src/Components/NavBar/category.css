@@ -9,3 +9,16 @@
     margin-left: 5rem;
     color: black;
 }
+@media screen and (max-width: 767px) {
+    .list-submenu {
+      flex-direction: column; /* Chuyển sang hiển thị dọc */
+      padding: 10px; /* Điều chỉnh lại khoảng cách */
+      display: none;
+    }
+  
+    .list-submenu .list-submenu-text {
+      margin-left: 0; /* Đặt lại margin để tránh việc lệch sang bên trái quá nhiều */
+      margin-top: 5px; /* Điều chỉnh khoảng cách giữa các mục trong danh sách */
+      text-align: center; /* Căn giữa văn bản */
+    }
+  }

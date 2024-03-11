@@ -1,14 +1,21 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { deleteCart, getCart, updateCartQuantity } from '../../../redux/API/apiRequestcart';
-import { useParams, useNavigate } from 'react-router-dom';
-import PayButton from './PayButton'
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './cartUser.scss';
+import { useSelector, useDispatch } from "react-redux";
+import {
+  deleteCart,
+  getCart,
+  updateCartQuantity,
+} from "../../../redux/API/apiRequestcart";
+import { useParams, useNavigate } from "react-router-dom";
+import PayButton from "./PayButton";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./cartUser.scss";
+import Vnpay from "../vnpay/Vnpay";
 
 const CartUser = () => {
   const { userId } = useParams();
@@ -21,12 +28,10 @@ const CartUser = () => {
   const msg = useSelector((state) => state.carts?.msg);
 
   const handleDeleteCart = (productId) => {
-
-    deleteCart(productId, dispatch, userId)
-      .then(() => {
-        getCart(accessToken, dispatch, userId);
-        toast.success('Sản phẩm đã được xóa khỏi giỏ hàng', { autoClose: 3000 });
-      });
+    deleteCart(productId, dispatch, userId).then(() => {
+      getCart(accessToken, dispatch, userId);
+      toast.success("Sản phẩm đã được xóa khỏi giỏ hàng", { autoClose: 3000 });
+    });
   };
 
   const handleUpdateQuantity = (productId, newQuantity) => {
@@ -46,10 +51,10 @@ const CartUser = () => {
 
   useEffect(() => {
     if (!user) {
-      navigate('/login');
+      navigate("/login");
     }
     if (!carts) {
-      navigate('/');
+      navigate("/");
     }
     if (user?.accessToken) {
       getCart(accessToken, dispatch, userId);
@@ -63,7 +68,10 @@ const CartUser = () => {
       }
     }
     // Định dạng số thành chuỗi tiền tệ Việt Nam
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(subtotal);
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(subtotal);
   };
   return (
     <Container>
@@ -72,41 +80,82 @@ const CartUser = () => {
           <div className="cart-container">
             <h2 className="cart-title">Giỏ hàng</h2>
             <div className="cart-product-list">
-              {carts.products.map((product) => (
-                <div className="cart-product" key={product.productId}>
-                  <div className="cart-product-image">
-                    <img src={`${process.env.REACT_APP_BACKEND_URL}${product.img}`} alt={product.name} />
-                  </div>
-                  <div className="cart-product-details">
-                    <h3 className="cart-product-name">{product.name}</h3>
-                    <div className="cart-product-quantity">
-                      <button onClick={() => handleUpdateQuantity(product.productId, product.quantity - 1)}>-</button>
-                      <span>{product.quantity}</span>
-                      <button onClick={() => handleUpdateQuantity(product.productId, product.quantity + 1)}>+</button>
+              {carts.products.map((product,index) => (
+                <Row>
+                  <Col md={0}>
+                    <div className="cart-product" key={product.productId}>
+                      <div className="cart-product-image">
+                        <img
+                          src={`${process.env.REACT_APP_BACKEND_URL}${product.img}`}
+                          alt={product.name}
+                        />
+                      </div>
+                      <div className="cart-product-details">
+                        <h3 className="cart-product-name">{product.name}</h3>
+                        <div className="cart-product-quantity">
+                          <button
+                            onClick={() =>
+                              handleUpdateQuantity(
+                                product.productId,
+                                product.quantity - 1
+                              )
+                            }
+                          >
+                            -
+                          </button>
+                          <span>{product.quantity}</span>
+                          <button
+                            onClick={() =>
+                              handleUpdateQuantity(
+                                product.productId,
+                                product.quantity + 1
+                              )
+                            }
+                          >
+                            +
+                          </button>
+                        </div>
+                        <div className="cart-product-price">
+                          {new Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(product.price)}
+                        </div>
+                        <button
+                          className="cart-product-delete"
+                          onClick={() => handleDeleteCart(product.productId)}
+                        >
+                          Xóa
+                        </button>
+                      </div>
                     </div>
-                    <div className="cart-product-price">{new Intl.NumberFormat("vi-VN", {
-                          style: "currency",
-                          currency: "VND",
-                        }).format(product.price)}</div>
-                    <button className="cart-product-delete" onClick={() => handleDeleteCart(product.productId)}>
-                      Xóa
-                    </button>
-                  </div>
-                </div>
+                  </Col>
+                  {index === 0 && ( // chỉ render Vnpay cho phần tử đầu tiên
+                    <Col md={3}>
+                      <Vnpay product={product} />
+                    </Col>
+                  )}
+                </Row>
               ))}
             </div>
             <div className="cart-total">
               <span className="cart-total-label">Tổng tiền:</span>
               <span className="cart-total-amount">
-                
-                ${calculateSubtotal(carts.products)}</span>
+                ${calculateSubtotal(carts.products)}
+              </span>
             </div>
-            <PayButton cartItems={carts} subtotal={carts.subtotal} total={carts.products.total} />
+            <PayButton
+              cartItems={carts}
+              subtotal={carts.subtotal}
+              total={carts.products.total}
+            />
             <ToastContainer />
           </div>
         </div>
       ) : (
-        <div className="empty-cart-message">Không có sản phẩm nào trong giỏ hàng</div>
+        <div className="empty-cart-message">
+          Không có sản phẩm nào trong giỏ hàng
+        </div>
       )}
       <ToastContainer position="top-right" autoClose={3000} />
     </Container>

@@ -154,7 +154,7 @@ const ProductUser = () => {
                 <Promotion productId={productDetail?._id} />
 
                 <Button type="submit" variant="outline-danger">
-                  Buy Now
+                  Add cart
                 </Button>
               </Form>
             </div>

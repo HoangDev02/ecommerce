@@ -37,6 +37,7 @@ a {
 
 /* Media Queries */
 @media screen and (max-width: 1024px) {
+
   .container {
     width: var(--container-width-md);
   }
@@ -67,9 +68,6 @@ a {
  padding-bottom: 10px;
 }
 
-/* CSS in HomeUser.css */
-
-/* CSS in HomeUser.css */
 
 .card-group-category {
   display: flex;
@@ -103,11 +101,6 @@ a {
   font-size: 1.2em;
 }
 
-@media screen and (max-width: 768px) {
-  .card-category {
-    flex: 1 0 48%; /* 100% / 2 cards = 50% */
-  }
-}
 
 
 .heading_container {
@@ -130,30 +123,97 @@ a {
   color: var(--color-primary);
 }
 .card-product {
-  margin-top: 5px;
-  height: 30rem;
+  position: relative;
+  flex-direction: column;
+  display: flex;
+  margin: 0px 5px 0px 10px;
 }
-.img-box {
-  height: 300px
-}
+
+
 .img-box .card-img-product {
-  margin: auto;
-  object-fit: scale-down;
+  position: relative;
   margin-bottom: 10px;
   height: 90%;
+}
+.detail-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.detail-box .product-span-name {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  width: fit-content;
+  max-width: 24ch;
+}
+.product-box-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 10px;
+  border-radius: 15px;
+  width: 130px;
+  height: 28px;
+  background-color: red;
+  color: white;
+}
+.product-box-price span {
+  padding: 0px 0px 0px 10px;
 }
 .card-home {
   margin-top: 20px;
   border: none;
 }
 
-@media (max-width: 768px) {
-  .product_section {
-    padding: 40px 0;
-  }
-  .card-product {
-    margin-top: 5px;
-    height: 35rem;
+.watch-all {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 10px 0px 0px 0px;
+}
+@media screen and (max-width: 768px) {
+  
+  
+  .heading_container h2 {
+    font-size: 1.5rem; /* Giảm kích thước font chữ cho tiêu đề trên điện thoại */
   }
 
+  .card-category {
+    flex: 1 0 45%; /* Điều chỉnh kích thước của các card danh mục trên điện thoại */
+    margin: 2%; /* Tăng khoảng cách giữa các card danh mục */
+  }
+
+  .card-img-categories {
+    height: auto; /* Thay đổi chiều cao của hình ảnh để nó không bị méo trên điện thoại */
+  }
+
+  .heading_container {
+    margin-bottom: 20px; /* Giảm khoảng cách giữa tiêu đề và phần content trên điện thoại */
+  }
+
+  .wrapper-content {
+    margin-top: 10px; /* Giảm khoảng cách trên cùng của phần content trên điện thoại */
+  }
+
+  .card-product {
+    margin: 10px 5px; /* Điều chỉnh khoảng cách giữa các card sản phẩm trên điện thoại */
+  }
+
+  .product-box-price {
+    width: auto; /* Thay đổi chiều rộng của hộp giá để nó có thể chứa văn bản trên điện thoại */
+    font-size: 1rem; /* Giảm kích thước font chữ cho giá sản phẩm trên điện thoại */
+    padding: 5px 10px; /* Điều chỉnh padding của hộp giá để nó trông phù hợp hơn trên điện thoại */
+    text-align: center; /* Căn giữa văn bản trong hộp giá trên điện thoại */
+  }
+
+  .product-box-price span {
+    padding: 0; /* Loại bỏ padding trái cho văn bản trong hộp giá trên điện thoại */
+  }
+  .watch-all  {
+    display: none;
+  }
 }

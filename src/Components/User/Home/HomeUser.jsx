@@ -16,6 +16,8 @@ import "slick-carousel/slick/slick-theme.css";
 const HomeUser = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
   const [currentStartIndex, setCurrentStartIndex] = useState(0);
+  const isMobile = window.innerWidth <= 768;
+
   const categoriesList = useSelector(
     (state) => state.categories.categories?.allCategory
   );
@@ -29,17 +31,34 @@ const HomeUser = () => {
     slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 1500,
+    autoplaySpeed: 2000,
+    arrows: true,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          arrows: false,
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
   useEffect(() => {
     getCategoryHome(dispatch);
   }, [dispatch]);
 
   return (
-    <Container>
-      <section className="product_section layout_padding">
+    <Container fluid={isMobile}>
+      <section className="product_section layout_padding pt-10">
         <CardGroup className="card-group-category">
-          <Row xs={7} md={7} className="g-4">
+          <Row xs={4} md={5} xl={7} className="g-4">
             {categoriesList?.slice(0, 7).map((item, idx) => (
               <Col key={idx}>
                 <Card className="card-category">
@@ -74,9 +93,15 @@ const HomeUser = () => {
               {item.newCategory.length > 0 && (
                 <Row className="wrapper-content">
                   {item.newCategory.length > 0 && (
-                    <h3 className="text-start category-name">{item.name}</h3>
+                    <Row>
+                      <Col md={10} lg={11}>
+                      <h3 className="text-start category-name">{item.name}</h3>
+
+                      </Col>
+                      <Col md={2} lg={1} className="watch-all"><Link to={`/category/${item.slug}`}>Xem tất cả</Link></Col>
+                    </Row>
                   )}
-                  {item.newCategory?.length > 5 ? (
+                  {item.newCategory?.length > 4 ? (
                     <Slider {...settings}>
                       {item.newCategory.map((product) => (
                         <div key={product._id}>
@@ -95,14 +120,19 @@ const HomeUser = () => {
                               <Card.Body className="detail-box">
                                 <Card.Title>
                                   <Link to={`/product/${product.slug}`}>
-                                    {product.name}
+                                    <span className="product-span-name">
+                                      {product.name}
+                                    </span>
                                   </Link>
                                 </Card.Title>
-                                <Card.Title>
-                                  {new Intl.NumberFormat("vi-VN", {
-                                    style: "currency",
-                                    currency: "VND",
-                                  }).format(product.price)}
+
+                                <Card.Title className="product-box-price">
+                                  <span>
+                                    {new Intl.NumberFormat("vi-VN", {
+                                      style: "currency",
+                                      currency: "VND",
+                                    }).format(product.price)}
+                                  </span>
                                 </Card.Title>
                               </Card.Body>
                             </Card>
@@ -131,7 +161,9 @@ const HomeUser = () => {
                             <Card.Body className="detail-box">
                               <Card.Title>
                                 <Link to={`/product/${product.slug}`}>
-                                  {product.name}
+                                  <span className="product-span-name">
+                                    {product.name}
+                                  </span>
                                 </Link>
                               </Card.Title>
                               <Card.Title>

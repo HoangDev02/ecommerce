@@ -160,3 +160,42 @@ input.search {
 .navbar-username {
   font-weight: bold;
 }
+/* Responsive navbar */
+@media screen and (max-width: 991px) {
+  .navbar-right {
+    margin-left: 0; /* Đặt lại margin-left để navbar phản ứng trên các thiết bị di động */
+  }
+
+  .logo .logo-span {
+    margin-top: 0; /* Đặt lại margin-top để logo phản ứng trên các thiết bị di động */
+  }
+
+  .navbar-link {
+    margin-right: 10px; /* Điều chỉnh khoảng cách giữa các navbar-link trên điện thoại */
+  }
+
+  .navbar-brand {
+    font-size: 18px; /* Giảm kích thước font chữ của navbar-brand trên điện thoại */
+  }
+
+  .navbar-cart {
+    animation: none; /* Dừng animation shake của navbar-cart trên điện thoại */
+  }
+
+  .navbar-username,
+  .navbar-logout {
+    padding: 10px; /* Điều chỉnh padding của navbar-username và navbar-logout trên điện thoại */
+    font-size: 12px; /* Giảm kích thước font chữ của navbar-username và navbar-logout trên điện thoại */
+  }
+}
+
+/* Nếu bạn muốn ẩn các phần tử khác khi màn hình nhỏ hơn 991px */
+@media screen and (max-width: 991px) {
+  .logo {
+    display: none; /* Ẩn logo trên điện thoại */
+  }
+
+  .navbar-link {
+    display: none; /* Ẩn navbar-link trên điện thoại */
+  }
+}
