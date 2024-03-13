@@ -9,7 +9,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 app.use(
     cors({
-      origin: "http://localhost:3000",
+      origin: process.env.REACT_APP_BACKEND_URL,
       credentials: true,
     })
   );
