@@ -6,13 +6,13 @@ const middlewate = require('../app/middleware/middleware')
 // router.get('/register', userController.getRegister)
 // router.get('/login', userController.getLogin)
 router.get('/', middlewate.verifyToken,userController.getUsers)
-router.get('/:id', userController.getUser)
+router.get('/profile', middlewate.verifyUser,userController.getUser)
 
 //post
 router.post('/refresh', userController.refreshAccessToken)
 router.post('/register' , userController.isRegister);
+router.post('/changepassword', userController.changePassword)
 router.post('/login', userController.isLogin)
-router.post('/changePassword', userController.changePassword)
 router.post('/logout',userController.logOut)
 
 //delete

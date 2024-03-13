@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 const userController = {
   getUser: async (req, res, next) => {
     try {
-      const user = await userModel.findById(req.params.id);
+      const user = await userModel.findById(req.user.id);
       res.status(200).json(user);
     } catch (err) {
       next(err);
@@ -113,7 +113,7 @@ const userController = {
 
   isLogin: async (req, res, next) => {
     try {
-      const user = await userModel.findOne({ username: req.body.username });
+      const user = await userModel.findOne({ email: req.body.email });
       if (!user) {
         return res.status(301).send("User does not exist");
       }
@@ -189,17 +189,17 @@ const userController = {
   changePassword: async (req, res, next) => {
     try {
       const { username, oldPassword, newPassword } = req.body;
-
+      
       // Tìm người dùng dựa trên username
       const user = await userModel.findOne({ username: username });
       if (!user) {
-        return res.status(404).json("User not found");
+        return res.status(404).json({ message: "User not found" });
       }
 
       // Kiểm tra mật khẩu cũ
       const isMatch = await bcrypt.compare(oldPassword, user.password);
       if (!isMatch) {
-        return res.status(400).json("Old password is incorrect");
+        return res.status(400).json({ message: "Mật khẩu cũ không đúng" });
       }
 
       // Mã hóa mật khẩu mới
@@ -210,7 +210,7 @@ const userController = {
       user.password = hashedPassword;
       await user.save();
 
-      res.status(200).json("Password updated successfully");
+      res.status(200).json({ message: "Mật khẩu đã được thay đổi" });
     } catch (err) {
       next(err);
     }
