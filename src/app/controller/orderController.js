@@ -3,7 +3,7 @@ const Order = require('../models/orderModel');
 const orderController = {
   getOrderById: async (req, res) => {
     try {
-      const order = await Order.find({ userId: req.params.userId }).lean();
+      const order = await Order.find({ userId: req.user.id} ).lean();
       res.status(200).json(order);
     } catch (error) {
       console.log(error);

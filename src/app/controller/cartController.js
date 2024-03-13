@@ -16,7 +16,7 @@ const cartController = {
   },
   getCart: async (req, res, next) => {
     try {
-      const cart = await cartModel.findOne({ userId: req.params.userId });
+      const cart = await cartModel.findOne({ userId: req.user.id});
       if (!cart) {
         res.status(404).send("Cart not found");
       }
@@ -27,7 +27,7 @@ const cartController = {
   },
   updateCartQuantity: async (req, res, next) => {
     const { productId, quantity } = req.body;
-    const userId = req.params.userId;
+    const userId = req.user.id;
 
     try {
       let cart = await cartModel.findOne({ userId });
@@ -137,9 +137,9 @@ const cartController = {
     }
   },
   deleteCart: async (req, res, next) => {
-    const userId = req.params.userId;
+    const userId = req.user.id;
     const productId = req.body.productId;
-
+    console.log("userId", userId);
     try {
       const cart = await cartModel.findOne({ userId: userId });
       if (!cart) {
@@ -158,7 +158,7 @@ const cartController = {
         await cart.save();
         return res.status(200).json(cart);
       } else {
-        res.status(400).send("Item does not exist in cart");
+        res.status(400).json("Item does not exist in cart");
       }
     } catch (err) {
       next(err);

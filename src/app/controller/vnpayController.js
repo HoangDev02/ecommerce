@@ -14,7 +14,7 @@ const vnpayController = {
     var secretKey = 'WSJFDTTMDFDPUKOZTYXBDPEWWHTGBFLD';
     var vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
     var returnUrl = config.get('vnp_ReturnUrl');
-
+        
     var date = new Date();
 
     var createDate = dateFormat(date, 'yyyymmddHHmmss');

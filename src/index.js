@@ -30,7 +30,9 @@ const commentRouter = require("./router/commentRouter");
 const techSpecsRouter = require("./router/techSpecsRouter");
 const reviewRouter = require("./router/reviewRouter");
 const vnpayRouter = require("./router/vnpayRouter");
+const socketIo = require('socket.io');
 const port = 8080;
+
 dotenv.config();
 app.use(cookieParser());
 
@@ -74,6 +76,9 @@ app.use("/order", order);
 app.use(
   "/vnpay",vnpayRouter
 );
+app.get('/health-check', (req, res) => {
+  res.status(200).send('Server is running!');
+});
 
 app.listen(port, () => {
   connect();
