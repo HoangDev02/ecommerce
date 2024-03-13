@@ -109,7 +109,7 @@ const DealOfDay = () => {
           0:00:00:00
         </Col>
         <Col md={7} sm={8} className="countdown-timer">
-          <div>BUILD PC NHẬN QUÀ LÊN ĐẾN 20 TRIỆU!!!</div>
+          <div>CÁC SẢN PHẨM ĐANG ĐƯỢC GIẢM GIÁ!!!</div>
         </Col>
         <Col
           md={2}
@@ -155,7 +155,7 @@ const DealOfDay = () => {
                                   {new Intl.NumberFormat("vi-VN", {
                                     style: "currency",
                                     currency: "VND",
-                                  }).format(product.price)}
+                                  }).format(item.total)}
                                 </span>
                               </Card.Text>
                               <Card.Text className="product-quantity">

@@ -86,7 +86,7 @@ function Vnpay({ product }) {
         onClick={handlePurchase}
         disabled={isLoading}
       >
-        {isLoading ? "Đang xử lý..." : "Purchase"}
+        {isLoading ? "Đang xử lý..." : "Thanh toán bằng thẻ ATM"}
       </button>
     </div>
   );

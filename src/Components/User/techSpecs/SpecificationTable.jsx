@@ -4,14 +4,18 @@ import { getTechSpecs } from "../../../redux/API/apiTechSpecs";
 import { useDispatch, useSelector } from "react-redux";
 
 const SpecificationTable = ({ productId }) => {
+  const [currentProductId, setCurrentProductId] = useState(productId);
   const getListTechSpecs = useSelector(
     (state) => state.techSpecs.techSpecs?.techSpecs
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getTechSpecs(productId, dispatch);
-  }, [productId, dispatch]);
+    if (productId !== currentProductId) {
+      getTechSpecs(productId, dispatch);
+      setCurrentProductId(productId);
+    }
+  }, [productId, dispatch, currentProductId]);
 
   return (
     <div className="container mt-4">

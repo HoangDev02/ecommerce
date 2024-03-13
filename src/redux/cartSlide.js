@@ -24,6 +24,9 @@ const cartSlide = createSlice (
                 state.cartItems.isFetching = false;
                 state.cartItems.error = true;
             },
+            cleanCart: (state) => {
+                state.cartItems.allCart = [];
+            },
             addCartStart: (state) => {
                 state.cartItems.isFetching = true
             },
@@ -83,7 +86,8 @@ export const {
     updateCartQuantityFailed,
     updateCartQuantityStart,
     updateCartQuantitySuccess,
-    updateProductQuantityInCart
+    updateProductQuantityInCart,
+    cleanCart
 } = cartSlide.actions
 
 export default cartSlide.reducer

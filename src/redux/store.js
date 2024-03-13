@@ -8,6 +8,7 @@ import searchSlice from './searchSlice';
 import commentSlice from './commentSlide';
 import techSpecsSlice from './techSpecsSlide';
 import reviewsSlice from './reviewsSlide';
+import orderSlide from './orderSlide';
 import {
     persistStore,
     persistReducer,
@@ -33,7 +34,8 @@ const rootReducer = combineReducers({
   searchs: searchSlice, 
   comments: commentSlice,
   techSpecs: techSpecsSlice,
-  reviews: reviewsSlice
+  reviews: reviewsSlice,
+  orders: orderSlide
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -14,6 +14,9 @@ import Comment from "../comment/Comment";
 import SpecificationTable from "../techSpecs/SpecificationTable";
 import Promotion from "../promotion/Promotion";
 import Reviews from "../reviews/Reviews";
+import SuggestCategory from "../category/suggestCategory/SuggestCategory";
+import { createAxios } from "../../../redux/createInstance";
+import { loginSuccess } from "../../../redux/authSlice";
 
 const ProductUser = () => {
   const { id } = useParams();
@@ -23,7 +26,7 @@ const ProductUser = () => {
     (state) => state.products.detailProduct?.product
   );
   const productDetail = productDetails[0];
-
+  const [saleDealPrice, setSaleDealPrice] = useState();
   const categoriesList = useSelector(
     (state) => state.categories.suggestCategory?.suggest
   );
@@ -38,15 +41,13 @@ const ProductUser = () => {
       return;
     }
     const newProduct = {
-      productId: productDetail._id,
+      productId:  productDetail._id,
       name: productDetail.name,
-      price: productDetail.price,
+      price: saleDealPrice || productDetail.price,
       img: currentImage,
       quantity,
     };
-    addCart(newProduct, dispatch, navigate, userId);
-    // Show toast notification
-    toast.success("Sản phẩm đã được thêm vào giỏ hàng", { autoClose: 2000 });
+    addCart(newProduct, dispatch, userId);
   };
 
   useEffect(() => {
@@ -59,7 +60,12 @@ const ProductUser = () => {
       setCurrentImage(productDetail.img[0]);
     }
   }, [productDetail]);
-
+  useEffect(() => {
+    if (productDetail?.newDealSale?.length > 0) {
+      const dealTotal = productDetail.newDealSale[0].total; // Lấy total từ deal đầu tiên
+      setSaleDealPrice(dealTotal);
+    }
+  }, [productDetail?.newDealSale]);
   const handleImageClick = (image) => {
     setCurrentImage(image);
   };
@@ -98,8 +104,10 @@ const ProductUser = () => {
               ))}
             </div>
           </div>
+          {/* technical */}
           <SpecificationTable productId={productDetail?._id} />
           <Reviews productId={productDetail?._id} />
+          {/*  */}
         </Col>
         <Col md={6}>
           <div className="card_content">
@@ -159,6 +167,7 @@ const ProductUser = () => {
               </Form>
             </div>
           </div>
+          <SuggestCategory />
         </Col>
       </Row>
       {/* <ToastContainer position="top-right" autoClose={3000} />

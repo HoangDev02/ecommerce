@@ -1,0 +1,59 @@
+/* orderItem.css */
+
+.orderItemContainer {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .orderCard {
+    width: 50rem;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0px 10px 0px;
+  }
+  
+  .orderCardBody {
+    padding: 20px;
+  }
+  
+  .orderId {
+    color: #f44336;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .orderSubtitle {
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .orderDetails {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .productListItem {
+    color: #333;
+    font-size: 14px;
+    line-height: 1.6;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .orderTotal {
+    color: #f44336;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .addressListItem {
+    color: #333;
+    font-size: 14px;
+    line-height: 1.6;
+    border-top: 1px solid #e0e0e0;
+  }
+  

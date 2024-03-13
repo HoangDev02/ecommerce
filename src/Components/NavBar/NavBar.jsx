@@ -17,6 +17,7 @@ import { faCartShopping, faSearch } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { getCart } from "../../redux/API/apiRequestcart";
 import SearchBar from "../searchBar/SearchBar";
+import { cleanCart } from "../../redux/cartSlide";
 
 const NavBar = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
@@ -31,6 +32,7 @@ const NavBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const handleLogout = () => {
     logOut(dispatch, navigate,accessToken);
+    dispatch(cleanCart());
   };
 
   const handleSearchClick = async () => {
@@ -45,9 +47,9 @@ const NavBar = () => {
   };
   useEffect(() => {
     if (user?.accessToken) {
-      getCart(accessToken, dispatch, id);
+      getCart(accessToken, dispatch, axiosJWT);
     }
-  }, []);
+  }, [accessToken]);
   return (
     <Navbar expand="lg" variant="light" className="navbar">
       <Container fluid className="navbar-container">
@@ -62,7 +64,7 @@ const NavBar = () => {
                 className="d-inline-block align-top"
                 alt="logo"
               />
-              <span className="logo-span">ecommerce</span>
+              <span className="logo-span">E-ecommerce</span>
             </Navbar.Brand>
             <Nav className="nav-center">
               <Nav.Link href="/" className="navbar-link text-white">
@@ -82,7 +84,7 @@ const NavBar = () => {
               </Nav.Link>
             </Nav>
             <Nav className="navbar-right">
-              <Link to={`/cart/${id}`} className="navbar-link text-white">
+              <Link to={`/order`} className="navbar-link text-white">
                 Tra cứu đơn hàng
               </Link>
              
@@ -91,7 +93,7 @@ const NavBar = () => {
              
      
               <Link
-                to={`cart/${id}`}
+                to={`cart/cart-buy-order-box`}
                 className={`navbar-icon ${
                   carts && carts.length > 0 ? "cart-has-item" : ""
                 }`}
