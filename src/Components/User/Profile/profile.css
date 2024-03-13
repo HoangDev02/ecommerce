@@ -1,0 +1,46 @@
+.profile-infor span{
+    display: block;
+}
+.avatart-profile {
+    display: flex;
+}
+.avatart-profile p {
+    padding-left:10px;
+    
+}
+.avatart-profile p .name-profile {
+    color: #000;
+    font-size: 20px;
+    font-weight: 600;
+}
+.profile-infor {
+    display: grid;
+}
+.profile-infor span {
+    color: #000;
+    margin: 10px 10px 0px 0px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.profile-infor span:hover {
+    color: red;
+}
+
+.change-password-button {
+    background-color: #a74545; 
+    border: none; 
+    color: white;
+    padding: 10px 20px;
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block; 
+    font-size: 16px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+  }
+  
+  .change-password-button:hover {
+    background-color: #ff0000e0;
+  }
+  

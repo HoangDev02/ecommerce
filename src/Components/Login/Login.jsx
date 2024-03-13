@@ -17,7 +17,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newUser = {
-      username: username,
+      email: username,
       password: password,
     };
 
@@ -42,7 +42,7 @@ const Login = () => {
       {error && <div className="error-message">{error}</div>}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formUsername">
-          <Form.Label>Username</Form.Label>
+          <Form.Label>Email</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter your username"

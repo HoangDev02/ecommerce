@@ -25,6 +25,7 @@ import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
 import PayButton from "./Components/User/Cart/PayButton";
 import Order from "./Components/User/order/Order";
+import Profile from "./Components/User/Profile/Profile";
 
 function App() {
   const [status, setStatus] = useState("Đang kết nối...");
@@ -106,6 +107,7 @@ function App() {
           <Route path="/search?" element={<Search />}></Route>
           <Route path="/cart/cart-info-order-box" element={<PayButton />}></Route>
           <Route path="/order" element={<Order />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
           {/* Compoment */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

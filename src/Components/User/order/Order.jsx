@@ -12,6 +12,10 @@ function Order() {
   let axiosJWT = createAxios(user, dispatch, logoutSuccess);
 
   useEffect(() => {
+    if(user === null){
+      window.location.href = '/login'
+    
+    }
     getOrder(user?.accessToken, axiosJWT, dispatch);
   }, []);
 

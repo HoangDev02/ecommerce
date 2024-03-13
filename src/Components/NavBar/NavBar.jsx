@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../redux/API/apiRequest";
 import { searchProduct } from "../../redux/API/apiSearch";
-import { logoutSuccess } from "../../redux/authSlice";
+import { loginSuccess, logoutSuccess } from "../../redux/authSlice";
 import { createAxios } from "../../redux/createInstance";
 import "./navbar.css";
 import Container from "react-bootstrap/Container";
@@ -27,24 +27,14 @@ const NavBar = () => {
   const accessToken = user?.accessToken;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let axiosJWT = createAxios(user, dispatch, logoutSuccess);
+  let axiosJWT = createAxios(user, dispatch, loginSuccess);
   const [searchVisible, setSearchVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const handleLogout = () => {
-    logOut(dispatch, navigate,accessToken);
+    logOut(dispatch, navigate, accessToken);
     dispatch(cleanCart());
   };
 
-  const handleSearchClick = async () => {
-    setSearchVisible(!searchVisible);
-    if (searchVisible) {
-      searchProduct(dispatch, searchQuery);
-      navigate(`/search?search=${searchQuery}`);
-    }
-  };
-  const handleSearchInputChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
   useEffect(() => {
     if (user?.accessToken) {
       getCart(accessToken, dispatch, axiosJWT);
@@ -87,11 +77,10 @@ const NavBar = () => {
               <Link to={`/order`} className="navbar-link text-white">
                 Tra cứu đơn hàng
               </Link>
-             
-                  {/* <div className="search-box"> */}
-                  <SearchBar/>
-             
-     
+
+              {/* <div className="search-box"> */}
+              <SearchBar />
+
               <Link
                 to={`cart/cart-buy-order-box`}
                 className={`navbar-icon ${
@@ -116,12 +105,15 @@ const NavBar = () => {
                       />
                       <div class="dropdown-content">
                         <span className="navbar-username">{user.username}</span>
+                        <Link to="/profile" className="navbar-logout">
+                          Thông tin cá nhân
+                        </Link>
                         <Link
                           // to="/logout"
                           className="navbar-logout "
                           onClick={handleLogout}
                         >
-                          Log out
+                          Đăng Xuất
                         </Link>
                       </div>
                     </div>
