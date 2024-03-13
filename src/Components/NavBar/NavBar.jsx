@@ -11,14 +11,11 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Logo from "../../assets/logo.png";
-import { faCartShopping, faSearch } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { getCart } from "../../redux/API/apiRequestcart";
 import SearchBar from "../searchBar/SearchBar";
 import { cleanCart } from "../../redux/cartSlide";
-
 const NavBar = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
   const carts = useSelector((state) => state.carts.cartItems?.allCart.products);
@@ -87,10 +84,7 @@ const NavBar = () => {
                   carts && carts.length > 0 ? "cart-has-item" : ""
                 }`}
               >
-                <FontAwesomeIcon icon={faCartShopping} className="text-white" />
-                {carts && carts.length > 0 && (
-                  <span className="badge ">{carts.length}</span>
-                )}
+            
               </Link>
               {user ? (
                 <div class="navbar">
