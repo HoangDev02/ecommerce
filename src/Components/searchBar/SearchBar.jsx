@@ -4,8 +4,8 @@ import { searchProduct } from "../../redux/API/apiSearch";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
-
-import SearchIcon from '@mui/icons-material/Search';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "./searchbar.css";
 
 const SearchBar = () => {
@@ -48,8 +48,8 @@ const SearchBar = () => {
         )}
         </Col>
         <Col>
-          <SearchIcon
-            // icon={faSearch}
+          <FontAwesomeIcon
+            icon={faSearch}
             className="search-icon"
             onClick={handleSearchClick}
           />

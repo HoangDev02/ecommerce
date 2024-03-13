@@ -43,20 +43,20 @@ function App() {
     };
     fetchData();
   }, [isConnected]);
-  if (!isConnected) {
-    return (
-      <Container className="d-flex justify-content-center align-items-center vh-100">
-        <Row>
-          <Col>
-            <div className="text-center">
-              <h1>Không thể kết nối đến server</h1>
-              <p>Vui lòng kiểm tra lại kết nối của bạn và thử lại.</p>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
+  // if (!isConnected) {
+  //   return (
+  //     <Container className="d-flex justify-content-center align-items-center vh-100">
+  //       <Row>
+  //         <Col>
+  //           <div className="text-center">
+  //             <h1>Không thể kết nối đến server</h1>
+  //             <p>Vui lòng kiểm tra lại kết nối của bạn và thử lại.</p>
+  //           </div>
+  //         </Col>
+  //       </Row>
+  //     </Container>
+  //   );
+  // }
   return (
     <Router>
       <NavigationBar />
