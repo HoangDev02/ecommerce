@@ -9,13 +9,10 @@ const morgan = require("morgan");
 const cors = require("cors");
 
 // how to cors in express
-app.use(cors());
-app.use(
-    cors({
-      origin: '*',
-      credentials: true,
-    })
-);
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://ecommerce-cyan-iota-62.vercel.app/'],
+  credentials: true, 
+}));
 const connect = require("../src/app/connect/connect");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 //router
