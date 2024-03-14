@@ -7,12 +7,15 @@ const dotenv = require("dotenv");
 const app = express();
 const morgan = require("morgan");
 const cors = require("cors");
+
+// how to cors in express
+app.use(cors());
 app.use(
     cors({
-      origin: process.env.REACT_APP_BACKEND_URL,
+      origin: '*',
       credentials: true,
     })
-  );
+);
 const connect = require("../src/app/connect/connect");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 //router
