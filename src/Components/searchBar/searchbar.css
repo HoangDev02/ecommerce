@@ -41,10 +41,9 @@
     margin-right: 10px;
     cursor: pointer;
     color: #ffffff; /* Màu trắng cho biểu tượng tìm kiếm */
-    background-color: #ff6666; /* Màu đỏ */
-    padding: 12px; /* Kích thước lớn hơn */
     border-radius: 50%;
     transition: all 0.3s ease;
+    font-size: 20px;
 }
 
 .search-icon:hover {

@@ -10,7 +10,6 @@ function Promotion({ productId }) {
   useEffect(() => {}, [productId, dispatch]);
 
   return (
-    <Container>
       <div className="promotion-main">
         <div className="row">
           <div className="col">
@@ -33,7 +32,6 @@ function Promotion({ productId }) {
           </div>
         </div>
       </div>
-    </Container>
   );
 }
 

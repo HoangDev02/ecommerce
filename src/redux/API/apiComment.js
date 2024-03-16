@@ -5,7 +5,6 @@ import {
   getCommentsFailed,
 } from "../commentSlide";
 export const postComment = async (data, axiosJWT, accessToken) => {
-  console.log(accessToken);
   try {
     const response = await axiosJWT.post(
       `${process.env.REACT_APP_BACKEND_URL}comment/create`,

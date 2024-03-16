@@ -20,7 +20,7 @@ function SuggestCategory() {
           {item.suggestedProducts.map((product) => (
             <div key={product._id} className="product-row">
               <Col>
-                <Card className="card-product">
+                <Card className="card-product card-suggest">
                   <Row>
                     <Col md={4}>
                       <div className="img-box">

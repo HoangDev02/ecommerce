@@ -1,7 +1,13 @@
-import React from "react";
-import { Card, ListGroup, ListGroupItem, Container } from "react-bootstrap";
+import React, { useState } from "react";
+import {
+  Card,
+  ListGroup,
+  ListGroupItem,
+  Container,
+  Button,
+} from "react-bootstrap";
 import "./orderItem.css";
-
+import axios from "axios";
 const OrderItem = ({ order }) => {
   const {
     _id,
@@ -12,8 +18,41 @@ const OrderItem = ({ order }) => {
     address,
     paymentMethod,
     createdAt,
+    status,
   } = order;
+  const [isStatus, setIsStatus] = useState(status);
 
+  const handleCancelOrder = async () => {
+    console.log(_id);
+    setIsStatus(false); // This will set isStatus to false
+    const cancelOrder = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}order/status`,
+      {
+        id: _id,
+        status: false, // Send the new status in the POST request
+      }
+    );
+    if (cancelOrder.status === 200) {
+      alert("Hủy đơn hàng thành công");
+      window.location.reload();
+    }
+    
+  };
+
+  const handleResetOrder = async () => {
+    setIsStatus(true); // This will set isStatus to true
+    const resetOrder = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}order/status`,
+      {
+        id: _id,
+        status: true, // Send the new status in the POST request
+      }
+    );
+    if (resetOrder.status === 200) {
+      alert("Đặt lại đơn hàng thành công");
+      window.location.reload();
+    }
+  };
   return (
     <Container className="orderItemContainer">
       <Card className="orderCard">
@@ -49,21 +88,32 @@ const OrderItem = ({ order }) => {
               <br />
               Số lượng: {product.quantity}
               <br />
-              Giá: {new Intl.NumberFormat("vi-VN", {
-                              style: "currency",
-                              currency: "VND",
-                            }).format(product.price)}
+              Giá:{" "}
+              {new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(product.price)}
             </ListGroupItem>
           ))}
         </ListGroup>
 
         <Card.Body>
           <Card.Text className="orderTotal">
-            Tổng giá tiền: {new Intl.NumberFormat("vi-VN", {
-                              style: "currency",
-                              currency: "VND",
-                            }).format(subtotal)}
+            Tổng giá tiền:{" "}
+            {new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(subtotal)}
           </Card.Text>
+          {isStatus ? (
+            <Button onClick={handleCancelOrder} className="cancelOrder">
+              Hủy đơn hàng
+            </Button>
+          ) : (
+            <Button onClick={handleResetOrder} className="cancelOrder">
+              Đặt lại đơn hàng
+            </Button>
+          )}
         </Card.Body>
       </Card>
     </Container>

@@ -11,12 +11,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { createAxios } from "../../../redux/createInstance";
 import "./comment.css";
 import { loginSuccess } from "../../../redux/authSlice";
+import { getCommentSuccess } from "../../../redux/commentSlide";
 
 function Comment({ productId }) {
   const user = useSelector((state) => state.auth.login?.currentUser);
   const comments = useSelector((state) => state.comments.comments);
   const dispatch = useDispatch();
-  let axiosJWT = createAxios(user, dispatch, loginSuccess);
+  let axiosJWT = createAxios(user, dispatch, getCommentSuccess);
   const [newComment, setNewComment] = useState("");
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentContent, setEditCommentContent] = useState("");

@@ -26,10 +26,14 @@ import { Container, Row, Col } from "react-bootstrap";
 import PayButton from "./Components/User/Cart/PayButton";
 import Order from "./Components/User/order/Order";
 import Profile from "./Components/User/Profile/Profile";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [status, setStatus] = useState("Đang kết nối...");
   const [isConnected, setIsConnected] = useState(true);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,20 +47,20 @@ function App() {
     };
     fetchData();
   }, [isConnected]);
-  // if (!isConnected) {
-  //   return (
-  //     <Container className="d-flex justify-content-center align-items-center vh-100">
-  //       <Row>
-  //         <Col>
-  //           <div className="text-center">
-  //             <h1>Không thể kết nối đến server</h1>
-  //             <p>Vui lòng kiểm tra lại kết nối của bạn và thử lại.</p>
-  //           </div>
-  //         </Col>
-  //       </Row>
-  //     </Container>
-  //   );
-  // }
+  if (!isConnected) {
+    return (
+      <Container className="d-flex justify-content-center align-items-center vh-100">
+        <Row>
+          <Col>
+            <div className="text-center">
+              <h1>Không thể kết nối đến server</h1>
+              <p>Vui lòng kiểm tra lại kết nối của bạn và thử lại.</p>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
   return (
     <Router>
       <NavigationBar />
@@ -105,7 +109,10 @@ function App() {
           <Route path="/cart/:userId?" element={<CartUser />}></Route>
           <Route path="/category/:slug" element={<CategoryUser />}></Route>
           <Route path="/search?" element={<Search />}></Route>
-          <Route path="/cart/cart-info-order-box" element={<PayButton />}></Route>
+          <Route
+            path="/cart/cart-info-order-box"
+            element={<PayButton />}
+          ></Route>
           <Route path="/order" element={<Order />}></Route>
           <Route path="/profile" element={<Profile />}></Route>
           {/* Compoment */}

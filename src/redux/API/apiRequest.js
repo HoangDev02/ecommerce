@@ -5,7 +5,6 @@ import {deleteUsersFailed, deleteUsersStart, deleteUsersSuccess, getUsersFailed,
 export const loginUser = async(user,dispatch,navigate) => {
     dispatch(loginStart());
     try {
-        console.log(process.env.REACT_APP_BACKEND_URL);
         const res  = await axios.post(`${process.env.REACT_APP_BACKEND_URL}user/login`, user,
         { withCredentials: true }
         );
@@ -55,15 +54,12 @@ export const deleteUser = async(accessToken,dispatch,id,axiosJWT) => {
         dispatch(deleteUsersFailed())
     }
 }
-export const logOut = async (dispatch, navigate,refreshToken) => {
+export const logOut = async (dispatch, navigate,accessToken,axiosJWT) => {
     dispatch(logoutStart());
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}user/logout`, {}, {
-        headers: {
-          'Cookie': `refreshToken=${refreshToken}`
-        },
-        withCredentials: true,
-      });
+      const response = await axiosJWT.post(`${process.env.REACT_APP_BACKEND_URL}user/logout`, {
+        headers: { authorization: `Bearer ${accessToken}`}
+    });
       if (response.status === 200) {
         dispatch(logoutSuccess());
         navigate("/login");

@@ -12,7 +12,6 @@ import DealOfDay from "../DealOfDay/DealOfDay";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 const HomeUser = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
   const [currentStartIndex, setCurrentStartIndex] = useState(0);
@@ -45,7 +44,7 @@ const HomeUser = () => {
         breakpoint: 480,
         settings: {
           arrows: false,
-          slidesToShow: 1,
+          slidesToShow: 2,
         },
       },
     ],
@@ -69,7 +68,7 @@ const HomeUser = () => {
                       className="card-img-categories "
                     />
                     <Card.Body>
-                      <Card.Title className="category-name">
+                      <Card.Title className="category-name-home">
                         {item.name}
                       </Card.Title>
                     </Card.Body>

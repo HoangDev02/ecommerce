@@ -24,7 +24,6 @@ export const getCart = async (accessToken, dispatch, axiosJWT) => {
         headers: { authorization: `Bearer ${accessToken}` },
       }
     );
-    console.log(res);
     dispatch(getCartsSuccess(res.data));
   } catch (err) {
     dispatch(getCartFailed());

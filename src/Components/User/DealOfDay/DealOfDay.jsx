@@ -37,7 +37,6 @@ const DealOfDay = () => {
       });
       dealSale.forEach((product, productIndex) => {
         product.newDealSale.forEach((sale) => {
-          console.log("sale" + sale.saleTime === currentTime);
           if (sale.saleTime === currentTime && !deletedSales.has(sale._id)) {
             const newProduct = {
               productId: sale.productId,
@@ -125,15 +124,15 @@ const DealOfDay = () => {
         <div>
           {dealSale.length > 5 ? (
             <Slider {...settings}>
-              {dealSale.map((product) =>
+              {dealSale.map((product,index) =>
                 product.newDealSale && product.newDealSale.length > 0 ? (
-                  <div key={product.id} className="mb-4">
+                  <div key={index} className="mb-4">
                     <Card className="product-card">
                       <div className="img-box">
                         {product?.img.length > 0 && (
                           <Card.Img
                             variant="top"
-                            src={product.img[0]}
+                            src={`${process.env.REACT_APP_BACKEND_URL}${product.img[0]}`}
                             alt="image"
                             className="card-img-product"
                           />
@@ -141,7 +140,7 @@ const DealOfDay = () => {
                       </div>
                       <Card.Body className="detail-box p-6">
                         <Link to={`/product/${product.slug}`}>
-                          <Card.Title className="product-name">
+                          <Card.Title className="product-name" >
                             <span className="product-span-name">
                               {product.name}
                             </span>

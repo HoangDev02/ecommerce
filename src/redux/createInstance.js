@@ -28,15 +28,9 @@ export const createAxios = (user, dispatch, stateSuccess) => {
       }
 
       let date = new Date();
-      let decodedToken;
-      try {
-        decodedToken = jwt_decode(user.accessToken);
-      } catch (error) {
-        console.error("Error decoding token:", error);
-        return config;
-      }
-
-      if (decodedToken.exp * 1000 < date.getTime()) {
+      const decodedToken = jwt_decode(user?.accessToken);
+    
+      if (decodedToken.exp < date.getTime() / 1000) {
         try {
           const data = await refreshToken(user.refreshToken);
           const refreshUser = {
@@ -51,6 +45,8 @@ export const createAxios = (user, dispatch, stateSuccess) => {
             error
           );
         }
+      } else {
+        config.headers["authorization"] = "Bearer " + user.accessToken;
       }
       return config;
     },

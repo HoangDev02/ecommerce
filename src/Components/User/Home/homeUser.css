@@ -95,7 +95,7 @@ a {
   border-top-right-radius: 10px;
 }
 
-.category-name {
+.category-name-home {
   text-align: center;
   color: #333;
   font-size: 1.2em;
@@ -127,9 +127,12 @@ a {
   flex-direction: column;
   display: flex;
   margin: 0px 5px 0px 10px;
+  height: 26rem;
 }
 
-
+.img-box {
+  height: 18rem;
+}
 .img-box .card-img-product {
   position: relative;
   margin-bottom: 10px;
@@ -176,8 +179,6 @@ a {
   margin: 10px 0px 0px 0px;
 }
 @media screen and (max-width: 768px) {
-  
-  
   .heading_container h2 {
     font-size: 1.5rem; /* Giảm kích thước font chữ cho tiêu đề trên điện thoại */
   }
@@ -198,9 +199,13 @@ a {
   .wrapper-content {
     margin-top: 10px; /* Giảm khoảng cách trên cùng của phần content trên điện thoại */
   }
-
+  .detail-box .product-span-name {
+   
+    max-width: 13ch;
+  }
   .card-product {
     margin: 10px 5px; /* Điều chỉnh khoảng cách giữa các card sản phẩm trên điện thoại */
+    height: 20rem;
   }
 
   .product-box-price {
@@ -215,5 +220,35 @@ a {
   }
   .watch-all  {
     display: none;
+  }
+  .card-img-categories {
+    height: 8rem;
+  }
+  .category-name-home {
+    text-align: center;
+    font-size: 1rem;
+    color: #333;
+    
+  }
+  .card-category {
+    height: 11rem;
+  }
+}
+@media screen and (max-width: 420px){
+  .img-box {
+    height: 12rem;
+  }
+  .category-name-home {
+    text-align: left;
+    font-size: 0.6rem;
+    color: #333;
+    
+  }
+  .card-category {
+    height: 6rem;
+    width: 70px;
+  }
+  .card-img-categories {
+    height: 3rem; /* Thay đổi chiều cao của hình ảnh để nó không bị méo trên điện thoại */
   }
 }

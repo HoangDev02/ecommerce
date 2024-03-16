@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./specificationTable.css"; // Đây là file CSS tùy chỉnh của bạn
 import { getTechSpecs } from "../../../redux/API/apiTechSpecs";
 import { useDispatch, useSelector } from "react-redux";
-
 const SpecificationTable = ({ productId }) => {
   const [currentProductId, setCurrentProductId] = useState(productId);
   const getListTechSpecs = useSelector(

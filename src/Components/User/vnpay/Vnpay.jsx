@@ -5,11 +5,10 @@ import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { postVnpay } from "../../../redux/API/apiVnpay";
 import "./vnpay.css";
-function Vnpay({ product }) {
+function Vnpay({ product,address, name, phone }) {
   const [isLoading, setIsLoading] = useState(false);
   const [bankCode, setBankCode] = useState("");
   const navigate = useNavigate();
-
   const handlePurchase = async () => {
     setIsLoading(true);
     try {
@@ -17,10 +16,14 @@ function Vnpay({ product }) {
         orderType: "billpayment",
         language: "vn",
         bankCode: bankCode,
-        amount: product.total,
-        returnUrl: "http://localhost:8080/vnpay/vnpay_return",
+        amount: product.subtotal,
+        // address: address,
+        // name: name,
+        // phone: phone,
+        // cartItems:product,
+        returnUrl: "http://localhost:3000",
       };
-
+      
       const response = await postVnpay(data);
       window.location.href = response.data.data;
     } catch (error) {

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductReviewsById } from "../../../redux/API/apiReviews";
 import { Accordion } from "react-bootstrap";
 import { set } from "js-cookie";
-
+import './review.css'
 function Reviews({ productId }) {
   const [currentProductId, setCurrentProductId] = useState(productId);
 
@@ -25,9 +25,9 @@ function Reviews({ productId }) {
          {
             review.title?.map((review) => (
                 <div>
-                    <div>{review.title}</div>
+                    <h3>{review.title}</h3>
                     <div>{review.content}</div>
-                    <img src={review.img}></img>
+                    <img src={review.img} className="img-reviews"></img>
                 </div>
             ))
          }

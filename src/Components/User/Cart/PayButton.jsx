@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,47 @@ const PayButton = ({ cartItems, subtotal, total }) => {
   const [phone, setPhone] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [vnpay, setVnpay] = useState("");
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "https://vnprovinces.pythonanywhere.com/api/provinces/?basic=true&limit=100"
+      )
+      .then((response) => setProvinces(response.data.results))
+      .catch((error) => console.error("Error fetching provinces:", error));
+  }, []);
+  useEffect(() => {
+    if (address.city) {
+      const province = provinces.find(
+        (province) => province.name === address.city
+      );
+      if (province) {
+        axios
+          .get(
+            `https://vnprovinces.pythonanywhere.com/api/districts/?province_id=${province.id}&basic=true&limit=100`
+          )
+          .then((response) => setDistricts(response.data.results))
+          .catch((error) => console.error("Error fetching districts:", error));
+      }
+    }
+  }, [address.city, provinces]);
+  useEffect(() => {
+    if (address.district) {
+      const district = districts.find(
+        (district) => district.name === address.district
+      );
+      if (district) {
+        axios
+          .get(
+            `https://vnprovinces.pythonanywhere.com/api/wards/?district_id=${district.id}&basic=true&limit=100`
+          )
+          .then((response) => setWards(response.data.results))
+          .catch((error) => console.error("Error fetching wards:", error));
+      }
+    }
+  }, [address.district, districts]);
   const handleCheckout = () => {
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}payment`, {
@@ -89,43 +130,58 @@ const PayButton = ({ cartItems, subtotal, total }) => {
                   <label htmlFor="city" className="form-label">
                     Tỉnh:
                   </label>
-                  <input
-                    type="text"
+                  <select
                     className="form-control-order"
                     id="city"
                     value={address.city}
                     onChange={(e) =>
                       setAddress({ ...address, city: e.target.value })
                     }
-                  />
+                  >
+                    {provinces.map((province) => (
+                      <option key={province.id} value={province.name}>
+                        {province.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <div className="mb-3">
+                <div className="mb-3" style={{ width: "100%" }}>
                   <label htmlFor="district" className="form-label">
-                    Huyện:
+                    Quận/Huyện:
                   </label>
-                  <input
-                    type="text"
+                  <select
                     className="form-control-order"
                     id="district"
                     value={address.district}
                     onChange={(e) =>
                       setAddress({ ...address, district: e.target.value })
                     }
-                  />
+                  >
+                    {districts.map((district) => (
+                      <option key={district.id} value={district.name}>
+                        {district.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <div className="mb-3">
+                <div className="mb-3" style={{ width: "100%" }}>
                   <label htmlFor="ward" className="form-label">
-                    Xã:
+                    Phường/Xã:
                   </label>
-                  <input
-                    type="text"
+                  <select
                     className="form-control-order"
                     id="ward"
                     value={address.ward}
                     onChange={(e) =>
                       setAddress({ ...address, ward: e.target.value })
                     }
-                  />
+                  >
+                    {wards.map((ward) => (
+                      <option key={ward.id} value={ward.name}>
+                        {ward.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="streetname" className="form-label">
@@ -164,7 +220,7 @@ const PayButton = ({ cartItems, subtotal, total }) => {
                     Đặt hàng Ngay
                   </button>
                 ) : vnpay === "card" ? (
-                  <Vnpay />
+                  <Vnpay product={cartItems} name={name} address={address} phone={phone}/>
                 ) : (
                   <></>
                 )}

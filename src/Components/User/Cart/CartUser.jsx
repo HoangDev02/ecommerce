@@ -19,6 +19,7 @@ import Vnpay from "../vnpay/Vnpay";
 import { set } from "js-cookie";
 import { createAxios } from "../../../redux/createInstance";
 import { loginSuccess } from "../../../redux/authSlice";
+import { getCartsSuccess } from "../../../redux/cartSlide";
 
 const CartUser = () => {
   const { userId } = useParams();
@@ -28,12 +29,11 @@ const CartUser = () => {
   const [currentUserId, setCurrentUserId] = useState(userId);
 
   const user = useSelector((state) => state.auth.login.currentUser);
-  let axiosJWT = createAxios(user, dispatch, loginSuccess);
+  let axiosJWT = createAxios(user, dispatch, getCartsSuccess);
   const carts = useSelector((state) => state.carts.cartItems?.allCart);
   const accessToken = user?.accessToken;
 
   const handleDeleteCart = (productId) => {
-    console.log("productId", productId);
     deleteCart(productId, dispatch, axiosJWT, accessToken).then(() => {
       getCart(accessToken, dispatch, axiosJWT);
       toast.success("Sản phẩm đã được xóa khỏi giỏ hàng", { autoClose: 3000 });
@@ -56,7 +56,6 @@ const CartUser = () => {
         })
         .catch((error) => {
           // Handle the error here, such as displaying an error message
-          console.log(error);
         });
     }
   };
