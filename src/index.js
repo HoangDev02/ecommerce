@@ -10,7 +10,7 @@ const cors = require("cors");
 
 // how to cors in express
 app.use(cors({
-  origin: ['https://ecommerce-cyan-iota-62.vercel.app','http://localhost:3000', ],
+  origin: ['https://ecommerce-ten-phi-47.vercel.app','http://localhost:3000', ],
   credentials: true, 
 }));
 const connect = require("../src/app/connect/connect");
