@@ -216,17 +216,20 @@ const userController = {
     }
   },
   logOut: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken) return res.status(401).json("No token to logout");
-
-    const deletedToken = await refreshTokens.deleteOne({ refreshToken });
-
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader) return res.status(401).json("No authorization header");
+    const token = authHeader.split(' ')[1];
+    
+    if (!token) return res.status(401).json("No token to logout");
+  
+    // Delete the user's token from the database
+    const deletedToken = await refreshTokens.deleteOne({ accessToken: token });
+  
     if (deletedToken.deletedCount === 0) {
-        return res.status(404).json("Token not found");
+      return res.status(404).json("Token not found");
     }
-
-    // Clear the refreshToken cookie
-    res.clearCookie("refreshToken");
+  
     res.status(200).json("Logged out successfully!");
   },
 };
